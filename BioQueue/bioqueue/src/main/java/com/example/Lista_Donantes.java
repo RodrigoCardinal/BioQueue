@@ -9,11 +9,17 @@ public class Lista_Donantes {
 
     private ListaEnlazada<Donante> listaDonantes;
 
-    public Lista_Donantes(String donantes) {
-        this.listaDonantes = new ListaEnlazada<>(); //SE INICIALIZA LA LISTA ENLAZADA VACÍA CUANDO SE CREA UNA INSTANCIA DE LA CLASE Lista_Donantes.
-        this.cargarDonantes(donantes); //SE LLAMA AL MÉTODO cargarDonantes PARA CARGAR LOS DATOS DE LOS DONANTES DESDE UN ARCHIVO CUYO NOMBRE SE PASA COMO ARGUMENTO AL CONSTRUCTOR.   
+   // public Lista_Donantes(String donantes) {
+    //    this.listaDonantes = new ListaEnlazada<>(); //SE INICIALIZA LA LISTA ENLAZADA VACÍA CUANDO SE CREA UNA INSTANCIA DE LA CLASE Lista_Donantes.
+    //    this.cargarDonantes(donantes); //SE LLAMA AL MÉTODO cargarDonantes PARA CARGAR LOS DATOS DE LOS DONANTES DESDE UN ARCHIVO CUYO NOMBRE SE PASA COMO ARGUMENTO AL CONSTRUCTOR.   
+    //}
+    public Lista_Donantes() {
+        this.listaDonantes=new ListaEnlazada<Donante>();
     }
-
+    public void agregarDonante(String cedula, String nombre, String organo_donado, String tipo_sangre) {
+        listaDonantes.agregar(new Donante(cedula, nombre, organo_donado, tipo_sangre));
+    }
+    
     public void cargarDonantes(String archivo) {
         listaDonantes = new ListaEnlazada<>();
 
@@ -26,8 +32,9 @@ public class Lista_Donantes {
                 String organo_donado = datos[2].trim();
                 String tipo_sangre = datos[3].trim();
 
-                Donante donante = new Donante(cedula, nombre, organo_donado, tipo_sangre);
-                listaDonantes.agregar(donante);
+               // Donante donante = new Donante(cedula, nombre, organo_donado, tipo_sangre);
+                //listaDonantes.agregar(donante);
+                this.agregarDonante(cedula, nombre, organo_donado, tipo_sangre);
             }
             System.out.println("Se cargaron " + listaDonantes.tamaño() + " donantes.");
         } catch (Exception e) {
