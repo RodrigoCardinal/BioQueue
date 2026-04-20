@@ -1,19 +1,19 @@
 package com.example;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
-public class Lista_Receptores 
 
-{
+public class Lista_Receptores {
+
     private ListaEnlazada<Receptor> listaReceptores; //ESTA ES LA LISTA ENLAZADA QUE VA A ALMACENAR LOS RECEPTORES, ES DECIR, LOS NODOS DE LA LISTA VAN A CONTENER OBJETOS DE TIPO RECEPTOR.    
-    public Lista_Receptores(String receptores) 
-    {
+
+    public Lista_Receptores(String receptores) {
         this.listaReceptores = new ListaEnlazada<>(); //SE INICIALIZA LA LISTA ENLAZADA VACÍA CUANDO SE CREA UNA INSTANCIA DE LA CLASE Lista_Receptores.
         archivoReceptores(receptores); //SE LLAMA AL MÉTODO archivoReceptores PARA CARGAR LOS DATOS DE LOS RECEPTORES DESDE UN ARCHIVO CUYO NOMBRE SE PASA COMO ARGUMENTO AL CONSTRUCTOR.   
 
     }
-    private void archivoReceptores (String receptores)
-    {
+
+    private void archivoReceptores(String receptores) {
         try (BufferedReader lector = new BufferedReader(new FileReader(receptores))) //SE UTILIZA UN BufferedReader PARA LEER EL ARCHIVO DE TEXTO QUE CONTIENE LOS DATOS DE LOS RECEPTORES. EL NOMBRE DEL ARCHIVO SE PASA COMO ARGUMENTO AL CONSTRUCTOR DE LA CLASE Lista_Receptores.
         {
             String linea;
@@ -25,11 +25,11 @@ public class Lista_Receptores
                 String organo_necesitado = datos[2].trim();
                 String tipo_sangre = datos[3].trim();
                 int dias_en_espera = Integer.parseInt(datos[4].trim()); //SE CONVIERTE EL QUINTO ELEMENTO DEL ARREGLO datos DE UN STRING A UN ENTERO UTILIZANDO Integer.parseInt(), YA QUE EL NÚMERO DE DÍAS EN ESPERA ES UN VALOR NUMÉRICO.
-                int prioridad = Integer.parseInt(datos[5].trim());  
-                
+                int prioridad = Integer.parseInt(datos[5].trim());
+
                 /* Dejo aca por si queremos convertir de numero a texto. Es de ka 
                 implementacion vieja
-                 Convertir prioridad de texto a número (como String)
+                Convertir prioridad de texto a número (como String)
                 String prioridadNumero;
                 if (prioridadTexto.equals("Alta")) {
                     prioridadNumero = "1";
@@ -40,10 +40,9 @@ public class Lista_Receptores
                 } else {
                     prioridadNumero = "0"; // valor por defecto si no se reconoce
                 } */
-                
                 // Crear receptor con la prioridad convertida a número (como String)
-                Receptor receptor = new Receptor(cedula, nombre, organo_necesitado, 
-                                                tipo_sangre, dias_en_espera, prioridad);
+                Receptor receptor = new Receptor(cedula, nombre, organo_necesitado,
+                        tipo_sangre, dias_en_espera, prioridad);
                 insertarOrdenado(receptor);
             }
         } catch (Exception e) {
@@ -51,26 +50,22 @@ public class Lista_Receptores
         }
     }
 
-    private void insertarOrdenado(Receptor receptor) 
-    {
-        if (listaReceptores.esVacia()) 
-        {
+    private void insertarOrdenado(Receptor receptor) {
+        if (listaReceptores.esVacia()) {
             listaReceptores.agregar(receptor);
             return;
         }
-    
+
         int i = 0;
-        while (i < listaReceptores.tamaño()) 
-        {
+        while (i < listaReceptores.tamaño()) {
             Receptor actual = listaReceptores.obtener(i);
 
-            if (receptor.getPrioridad() < actual.getPrioridad() || 
-           (receptor.getPrioridad() == actual.getPrioridad() && 
-            receptor.getDias_en_espera() > actual.getDias_en_espera())) 
-            {
-                break; 
+            if (receptor.getPrioridad() < actual.getPrioridad()
+                    || (receptor.getPrioridad() == actual.getPrioridad()
+                    && receptor.getDias_en_espera() > actual.getDias_en_espera())) {
+                break;
             }
-            i++; 
+            i++;
         }
         listaReceptores.insertar(i, receptor);
     }
@@ -91,4 +86,3 @@ public class Lista_Receptores
     }
 
 }
-
