@@ -1,9 +1,5 @@
 package com.example;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
 public class Lista_PosiblesTipodeSangre {
     
     private ListaEnlazada<String> Onegativo;   // qué tipos puede recibir O-
