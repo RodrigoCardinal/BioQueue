@@ -1,4 +1,4 @@
-package com.example;//ACA ESTA EL "COMO" DE LA LISTA, OSEA, LA IMPLEMENTACIÓN DE LOS MÉTODOS DEFINIDOS EN LA INTERFAZ TDALista.
+package com.example.ImplementacionesTDA;//ACA ESTA EL "COMO" DE LA LISTA, OSEA, LA IMPLEMENTACIÓN DE LOS MÉTODOS DEFINIDOS EN LA INTERFAZ TDALista.
 
 import java.util.Comparator;
 
