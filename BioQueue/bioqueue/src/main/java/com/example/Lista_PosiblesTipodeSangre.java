@@ -1,5 +1,4 @@
 package com.example;
-
 public class Lista_PosiblesTipodeSangre {
     
     private ListaEnlazada<String> Onegativo;   // qué tipos puede recibir O-
