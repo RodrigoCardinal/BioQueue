@@ -7,9 +7,9 @@ public class Receptor
     private String organo_necesitado;
     private String tipo_sangre;
     private int dias_en_espera;
-    private String prioridad;
+    private int prioridad;
     
-    public Receptor(String cedula, String nombre, String organo_necesitado, String tipo_sangre, int dias_en_espera, String prioridad) {
+    public Receptor(String cedula, String nombre, String organo_necesitado, String tipo_sangre, int dias_en_espera, int prioridad) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.organo_necesitado = organo_necesitado;
@@ -34,12 +34,11 @@ public class Receptor
     public int getDias_en_espera() {
         return dias_en_espera;
     }
-    public String getPrioridad() {
+    public int getPrioridad() {
         return prioridad;
     }
-    public String setPrioridad(String prioridad) 
+    public void setPrioridad(int prioridad) 
     {
         this.prioridad = prioridad;
-        return this.prioridad;
     }
 }

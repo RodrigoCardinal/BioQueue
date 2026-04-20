@@ -9,7 +9,6 @@ public class App
     public static void main( String[] args )
     {
         Lista_Receptores listaReceptores = new Lista_Receptores("bioqueue\\src\\Resources\\Receptores.txt");
-        listaReceptores.ordenarPorPrioridad();
         listaReceptores.MostrarReceptores(); 
         Lista_PosiblesTipodeSangre listaCompatibilidades = new Lista_PosiblesTipodeSangre();
         listaCompatibilidades.mostrarCompatibilidades();

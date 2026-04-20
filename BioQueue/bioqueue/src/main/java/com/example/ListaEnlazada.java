@@ -139,4 +139,31 @@ public class ListaEnlazada<T> implements TDALista<T> //LA CLASE LISTAENLAZADA IM
 
         }
     }
+
+    public boolean insertar(int posicion, T elemento) 
+    {
+        TDANodo<T> nuevoNodo = new TDANodo<>(elemento);
+
+        if (posicion == 0)
+        {
+            nuevoNodo.setSiguiente(primero);
+            primero = nuevoNodo;
+            return true;
+        }
+
+        TDANodo<T> actual = primero;
+        int contador = 0;
+        while (actual != null) 
+        {
+            if (contador == posicion - 1)
+            {
+                nuevoNodo.setSiguiente(actual.getSiguiente());
+                actual.setSiguiente(nuevoNodo);
+                return true;
+            }
+            actual = actual.getSiguiente();
+            contador++;
+        }
+        return false;
+    }
 }

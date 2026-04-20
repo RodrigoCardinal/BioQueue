@@ -25,9 +25,11 @@ public class Lista_Receptores
                 String organo_necesitado = datos[2].trim();
                 String tipo_sangre = datos[3].trim();
                 int dias_en_espera = Integer.parseInt(datos[4].trim()); //SE CONVIERTE EL QUINTO ELEMENTO DEL ARREGLO datos DE UN STRING A UN ENTERO UTILIZANDO Integer.parseInt(), YA QUE EL NÚMERO DE DÍAS EN ESPERA ES UN VALOR NUMÉRICO.
-                String prioridadTexto = datos[5].trim();  // "Alta", "Media" o "Baja"
-            
-                // Convertir prioridad de texto a número (como String)
+                int prioridad = Integer.parseInt(datos[5].trim());  
+                
+                /* Dejo aca por si queremos convertir de numero a texto. Es de ka 
+                implementacion vieja
+                 Convertir prioridad de texto a número (como String)
                 String prioridadNumero;
                 if (prioridadTexto.equals("Alta")) {
                     prioridadNumero = "1";
@@ -37,17 +39,42 @@ public class Lista_Receptores
                     prioridadNumero = "3";
                 } else {
                     prioridadNumero = "0"; // valor por defecto si no se reconoce
-                }
+                } */
                 
                 // Crear receptor con la prioridad convertida a número (como String)
                 Receptor receptor = new Receptor(cedula, nombre, organo_necesitado, 
-                                                tipo_sangre, dias_en_espera, prioridadNumero);
-                listaReceptores.agregar(receptor);
+                                                tipo_sangre, dias_en_espera, prioridad);
+                insertarOrdenado(receptor);
             }
         } catch (Exception e) {
             System.out.println("Error al leer receptores: " + e.getMessage());//tira error si no puede leer el archivo, mostrando un mensaje de error con la descripción del problema.
         }
     }
+
+    private void insertarOrdenado(Receptor receptor) 
+    {
+        if (listaReceptores.esVacia()) 
+        {
+            listaReceptores.agregar(receptor);
+            return;
+        }
+    
+        int i = 0;
+        while (i < listaReceptores.tamaño()) 
+        {
+            Receptor actual = listaReceptores.obtener(i);
+
+            if (receptor.getPrioridad() < actual.getPrioridad() || 
+           (receptor.getPrioridad() == actual.getPrioridad() && 
+            receptor.getDias_en_espera() > actual.getDias_en_espera())) 
+            {
+                break; 
+            }
+            i++; 
+        }
+        listaReceptores.insertar(i, receptor);
+    }
+
     public void MostrarReceptores() //ESTE MÉTODO SE UTILIZA PARA MOSTRAR LOS DATOS DE LOS RECEPTORES ALMACENADOS EN LA LISTA ENLAZADA listaReceptores. RECORRE LA LISTA Y IMPRIME LOS ATRIBUTOS DE CADA RECEPTOR.
     {
         for (int i = 0; i < listaReceptores.tamaño(); i++) //SE UTILIZA UN BUCLE FOR PARA RECORRER LA LISTA ENLAZADA DESDE EL PRIMER ELEMENTO HASTA EL ÚLTIMO, UTILIZANDO EL MÉTODO tamaño() PARA OBTENER EL NÚMERO DE ELEMENTOS EN LA LISTA.
@@ -62,11 +89,6 @@ public class Lista_Receptores
             System.out.println("---------------------------");
         }
     }
-    public void ordenarPorPrioridad() 
-    {
-        listaReceptores.ordenar((a,b)-> a.getPrioridad().compareTo(b.getPrioridad()));// IMPLEMENTACIÓN DEL ALGORITMO DE ORDENAMIENTO POR PRIORIDAD
-    } 
-
 
 }
 
