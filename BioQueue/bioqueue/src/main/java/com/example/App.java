@@ -8,7 +8,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        Lista_Receptores listaReceptores = new Lista_Receptores("BioQueue\\bioqueue\\src\\Resources\\Receptores.txt");
+        Lista_Receptores listaReceptores = new Lista_Receptores();
+        listaReceptores.archivoReceptores("BioQueue\\bioqueue\\src\\Resources\\Receptores.txt");
         listaReceptores.MostrarReceptores();
         Lista_PosiblesTipodeSangre listaCompatibilidades = new Lista_PosiblesTipodeSangre();
         listaCompatibilidades.mostrarCompatibilidades();
