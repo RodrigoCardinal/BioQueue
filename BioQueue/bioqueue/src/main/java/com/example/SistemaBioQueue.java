@@ -32,4 +32,35 @@ public class SistemaBioQueue {
         System.out.println("   Receptor seleccionado: " + receptorSeleccionado.getNombre() + " (Cédula: " + receptorSeleccionado.getCedula() + ", Órgano necesario: " + receptorSeleccionado.getOrgano_necesitado() + ", Prioridad: " + receptorSeleccionado.getPrioridad() + ")");
     }
         */
+/*
+ private Lista_Donantes listaDonantes;
+    private Lista_Receptores listaReceptores;
+    private Lista_PosiblesTipodeSangre tablaSangre;
+    private Cola<Donante> organosDisponibles;  
+    private RegistroTransplantes registro;
+
+      public SistemaBioQueue() {
+        this.listaDonantes = new Lista_Donantes();
+        this.listaReceptores = new Lista_Receptores();
+        this.tablaSangre = new Lista_PosiblesTipodeSangre();
+        this.organosDisponibles = new Cola<>();
+        this.registro = new RegistroTransplantes();
+        }
+     public void ingresarDonante(String cedula, String nomrbe, String organo, String tipoSangre)
+     {
+        Donante nuevo = new Donante (cedula, nombre, organo, tipoSangre);
+        listaDonantes.agregarDonante (cedula, nombre, organo, tipoSangre);
+        organoDisponibles.encolar(nuevo);
+        System.out.println("Donante" + nombre + " registrado. " + "Organos en espeerra: " + organosDisponibles.tamaño());
+     }
+    public void procesarOrgano(){
+        if (organosDisponible.esVacia()){
+        System.out.println("No hay organos disponibles para procesar. ");
+        }
+        return;
+    }
+    //Salida del Primer Organo
+    Donante donante = organosDisponibles.descolar();
+    System.out.println("\nProcesando órgano: " + donante.getOrgano_donado() + " del donante " + donante.getNombre() + " " + donante.getCedula())
+ */
 }
