@@ -166,4 +166,80 @@ public class Lista_Receptores {
         System.out.println("   Indice seleccionado: " + indiceSeleccionado);
         System.out.println("   Receptor seleccionado: " + receptorSeleccionado.getNombre());
     }
+    //REVISAR MAÑANA===============================================
+    // Dentro de Lista_Receptores.java
+
+public Receptor buscarReceptor(String cedula) {
+    for (int i = 0; i < listaReceptores.tamaño(); i++) {
+        Receptor r = listaReceptores.obtener(i);
+        if (r.getCedula().equals(cedula)) return r;
+    }
+    return null;
+}
+
+public boolean eliminarReceptor(String cedula) {
+    for (int i = 0; i < listaReceptores.tamaño(); i++) {
+        if (listaReceptores.obtener(i).getCedula().equals(cedula)) {
+            listaReceptores.eliminar(i);
+            return true;
+        }
+    }
+    return false;
+}
+
+public void procesarDonante(Donante donante, RegistroTransplantes registro) {
+    String organo = donante.getOrgano_donado();
+    String sangreDonante = donante.getTipo_sangre();
+    Lista_PosiblesTipodeSangre compatibilidad = new Lista_PosiblesTipodeSangre();
+
+    // 1. Filtrar receptores compatibles (órgano y sangre)
+    ListaEnlazada<Receptor> compatibles = new ListaEnlazada<>();
+    for (int i = 0; i < listaReceptores.tamaño(); i++) {
+        Receptor r = listaReceptores.obtener(i);
+        if (r.getOrgano_necesitado().equalsIgnoreCase(organo)
+                && compatibilidad.esCompatible(r.getTipo_sangre(), sangreDonante)) {
+            compatibles.agregar(r);
+        }
+    }
+
+    if (compatibles.tamaño() == 0) {
+        System.out.println("No hay receptores compatibles para " + donante.getNombre());
+        return;
+    }
+
+    // 2. Seleccionar el mejor según prioridad (y desempate aleatorio)
+    Receptor seleccionado = seleccionarMejorReceptor(compatibles);
+
+    // 3. Eliminar receptor de la lista de espera
+    eliminarReceptor(seleccionado.getCedula());
+
+    // 4. Registrar trasplante
+    registro.añadirTransplante(donante, seleccionado);
+
+    System.out.println("Trasplante realizado: " + donante.getNombre()
+            + " (" + donante.getOrgano_donado() + ", " + donante.getTipo_sangre() + ")"
+            + " -> " + seleccionado.getNombre()
+            + " (prioridad " + seleccionado.getPrioridad() + ")");
+}
+
+private Receptor seleccionarMejorReceptor(ListaEnlazada<Receptor> compatibles) {
+    // Encontrar la prioridad más baja (mayor urgencia)
+    int mejorPrioridad = Integer.MAX_VALUE;
+    for (int i = 0; i < compatibles.tamaño(); i++) {
+        int p = compatibles.obtener(i).getPrioridad();
+        if (p < mejorPrioridad) mejorPrioridad = p;
+    }
+
+    // Recolectar todos los que tienen esa prioridad
+    ListaEnlazada<Receptor> empatados = new ListaEnlazada<>();
+    for (int i = 0; i < compatibles.tamaño(); i++) {
+        Receptor r = compatibles.obtener(i);
+        if (r.getPrioridad() == mejorPrioridad) empatados.agregar(r);
+    }
+
+    // Si hay más de uno, elegir aleatoriamente
+    if (empatados.tamaño() == 1) return empatados.obtener(0);
+    java.util.Random rand = new java.util.Random();
+    return empatados.obtener(rand.nextInt(empatados.tamaño()));
+}
 }
