@@ -16,8 +16,8 @@ public class GestorDonantes {
     public GestorDonantes() {
         this.listaDonantes=new ListaEnlazada<Donante>();
     }
-    public void agregarDonante(String cedula, String nombre, String organo_donado, String tipo_sangre) {
-        listaDonantes.agregar(new Donante(cedula, nombre, organo_donado, tipo_sangre));
+    public void agregarDonante(String cedula, String nombre, String organoDonado, String tipo_sangre) {
+        listaDonantes.agregar(new Donante(cedula, nombre, organoDonado, tipo_sangre));
     }
     
     public void cargarDonantes(String archivo) {
@@ -47,8 +47,8 @@ public class GestorDonantes {
             Donante donante = listaDonantes.obtener(i);
             System.out.println("Cédula: " + donante.getCedula());
             System.out.println("Nombre: " + donante.getNombre());
-            System.out.println("Órgano Donado: " + donante.getOrgano_donado());
-            System.out.println("Tipo de Sangre: " + donante.getTipo_sangre());
+            System.out.println("Órgano Donado: " + donante.getOrganoDonado());
+            System.out.println("Tipo de Sangre: " + donante.getTipoSangre());
             System.out.println("---------------------------");
 
         }

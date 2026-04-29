@@ -1,35 +1,22 @@
 package com.example;
 
-public class Donante {
+public class Donante extends Persona{
 
-    private String cedula;
-    private String nombre;
-    private String organo_donado;
-    private String tipo_sangre;
 
-    public Donante(String cedula, String nombre, String organo_donado, String tipo_sangre) {
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.organo_donado = organo_donado;
-        this.tipo_sangre = tipo_sangre;
+    private String organoDonado;
+
+    public Donante(String cedula, String nombre, String organoDonado, String tipoSangre) {
+        super(cedula,nombre, tipoSangre);
+        this.organoDonado = organoDonado;
     }
 
     // Getters
-    public String getCedula() {
-        return cedula;
+
+
+    public String getOrganoDonado() {
+        return organoDonado;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getOrgano_donado() {
-        return organo_donado;
-    }
-
-    public String getTipo_sangre() {
-        return tipo_sangre;
-    }
 
     // Setters
     public void setCedula(String cedula) {
@@ -41,10 +28,10 @@ public class Donante {
     }
 
     public void setOrgano_donado(String organo_donado) {
-        this.organo_donado = organo_donado;
+        this.organoDonado = organo_donado;
     }
 
-    public void setTipo_sangre(String tipo_sangre) {
-        this.tipo_sangre = tipo_sangre;
-    }
+   // public void setTipo_sangre(String tipo_sangre) {
+     //   this.tipo_sangre = tipo_sangre;
+    //}
 }
