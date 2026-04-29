@@ -5,7 +5,7 @@ import java.io.FileReader;
 
 import com.example.ImplementacionesTDA.ListaEnlazada;
 
-public class Lista_Donantes {
+public class GestorDonantes {
 
     private ListaEnlazada<Donante> listaDonantes;
 
@@ -13,7 +13,7 @@ public class Lista_Donantes {
     //    this.listaDonantes = new ListaEnlazada<>(); //SE INICIALIZA LA LISTA ENLAZADA VACÍA CUANDO SE CREA UNA INSTANCIA DE LA CLASE Lista_Donantes.
     //    this.cargarDonantes(donantes); //SE LLAMA AL MÉTODO cargarDonantes PARA CARGAR LOS DATOS DE LOS DONANTES DESDE UN ARCHIVO CUYO NOMBRE SE PASA COMO ARGUMENTO AL CONSTRUCTOR.   
     //}
-    public Lista_Donantes() {
+    public GestorDonantes() {
         this.listaDonantes=new ListaEnlazada<Donante>();
     }
     public void agregarDonante(String cedula, String nombre, String organo_donado, String tipo_sangre) {

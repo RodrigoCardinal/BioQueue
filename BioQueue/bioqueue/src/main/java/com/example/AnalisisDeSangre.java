@@ -2,7 +2,7 @@ package com.example;
 
 import java.util.Arrays;
 
-public class Lista_PosiblesTipodeSangre {
+public class AnalisisDeSangre {
 
     private final String[] Onegativo = {"O-"};
     private final String[] Opositivo = {"O-", "O+"};

@@ -1,8 +1,148 @@
 package com.example;
 import java.util.Random;
+
 import com.example.ImplementacionesTDA.ListaEnlazada;
 
 public class SistemaBioQueue {
+    GestorReceptores gestorReceptores;
+    public SistemaBioQueue() {
+        gestorReceptores=new GestorReceptores();
+    }
+    public void filtrarYDesempatar( String organoNecesitado, String tipoSangreDonante) 
+    {
+        
+        System.out.println("\nBUSCAR RECEPTORES COMPATIBLES");
+        System.out.println("Organo: " + organoNecesitado + " | Sangre donante: " + tipoSangreDonante);
+        System.out.println("----------------------------------------");
+        AnalisisDeSangre compatibilidad = new AnalisisDeSangre();
+        ListaEnlazada<Receptor> receptoresCompatibles = new ListaEnlazada<>();
+        
+        for (int i = 0; i < gestorReceptores.getListaReceptores().tamaño(); i++) 
+            {
+            Receptor receptor = gestorReceptores.getListaReceptores().obtener(i);
+            
+            if (receptor.getOrgano_necesitado().equalsIgnoreCase(organoNecesitado)) 
+                {
+                if (compatibilidad.esCompatible(receptor.getTipo_sangre(), tipoSangreDonante)) 
+                    {
+                    System.out.println("COMPATIBLE: " + receptor.getNombre());
+                    receptoresCompatibles.agregar(receptor);
+                } 
+                else 
+                {
+                    System.out.println("INCOMPATIBLE (sangre no compatible): " + receptor.getNombre());
+                }
+            } 
+            else 
+            {
+                System.out.println("INCOMPATIBLE (organo diferente): " + receptor.getNombre());
+            }
+        }
+               
+        System.out.println("\nCompatibles encontrados: " + receptoresCompatibles.tamaño());
+        
+        if (receptoresCompatibles.tamaño() > 1) 
+        {
+            ListaEnlazada<Receptor> listaDesempate = new ListaEnlazada<>();
+            
+            for (int i = 0; i < receptoresCompatibles.tamaño(); i++) {
+                listaDesempate.agregar(receptoresCompatibles.obtener(i));
+            }
+            
+            desempateRandom(listaDesempate);
+            
+        } 
+        else if (receptoresCompatibles.tamaño() == 1) 
+            {
+            Receptor seleccionado = receptoresCompatibles.obtener(0);
+            System.out.println("\nReceptor seleccionado: " + seleccionado.getNombre());
+        } 
+        else 
+        {
+            System.out.println("\nNo hay receptores compatibles.");
+        }
+    }
+    
+    public void desempateRandom(ListaEnlazada<Receptor> listaDesempate) {
+        int totalEmpatados = listaDesempate.tamaño();
+        
+        if (totalEmpatados == 0) {
+            System.out.println("No hay receptores en la lista de desempate.");
+            return;
+        }
+        
+        Random random = new Random();
+        int indiceSeleccionado = random.nextInt(totalEmpatados);
+        Receptor receptorSeleccionado = listaDesempate.obtener(indiceSeleccionado);
+        
+        System.out.println("\nDESEMPATE POR RANDOM:");
+        System.out.println("   Lista de empatados: " + totalEmpatados + " receptores");
+        System.out.println("   Indice seleccionado: " + indiceSeleccionado);
+        System.out.println("   Receptor seleccionado: " + receptorSeleccionado.getNombre());
+    }
+    public void procesarDonante(Donante donante, RegistroTransplantes registro) {
+        String organo = donante.getOrgano_donado();
+        String sangreDonante = donante.getTipo_sangre();
+        AnalisisDeSangre compatibilidad = new AnalisisDeSangre();
+
+        // 1. Filtrar receptores compatibles (órgano y sangre)
+        ListaEnlazada<Receptor> compatibles = new ListaEnlazada<>();
+        for (int i = 0; i < gestorReceptores.getListaReceptores().tamaño(); i++) {
+            Receptor r = gestorReceptores.getListaReceptores().obtener(i);
+            if (r.getOrgano_necesitado().equalsIgnoreCase(organo)
+                    && compatibilidad.esCompatible(r.getTipo_sangre(), sangreDonante)) {
+                compatibles.agregar(r);
+            }
+        }
+
+        if (compatibles.tamaño() == 0) {
+            System.out.println("No hay receptores compatibles para " + donante.getNombre());
+            return;
+        }
+
+        // 2. Seleccionar el mejor según prioridad (y desempate aleatorio)
+        Receptor seleccionado = seleccionarMejorReceptor(compatibles);
+
+        // 3. Eliminar receptor de la lista de espera
+        gestorReceptores.eliminarReceptor(seleccionado.getCedula());
+
+        // 4. Registrar trasplante
+        registro.añadirTransplante(donante, seleccionado);
+
+        System.out.println("Trasplante realizado: " + donante.getNombre()
+                + " (" + donante.getOrgano_donado() + ", " + donante.getTipo_sangre() + ")"
+                + " -> " + seleccionado.getNombre()
+                + " (prioridad " + seleccionado.getPrioridad() + ")");
+    }
+
+    private Receptor seleccionarMejorReceptor(ListaEnlazada<Receptor> compatibles) {
+        // Encontrar la prioridad más baja (mayor urgencia)
+        int mejorPrioridad = Integer.MAX_VALUE;
+        for (int i = 0; i < compatibles.tamaño(); i++) {
+            int p = compatibles.obtener(i).getPrioridad();
+            if (p < mejorPrioridad) {
+                mejorPrioridad = p;
+            }
+        }
+
+        // Recolectar todos los que tienen esa prioridad
+        ListaEnlazada<Receptor> empatados = new ListaEnlazada<>();
+        for (int i = 0; i < compatibles.tamaño(); i++) {
+            Receptor r = compatibles.obtener(i);
+            if (r.getPrioridad() == mejorPrioridad) {
+                empatados.agregar(r);
+            }
+        }
+
+        // Si hay más de uno, elegir aleatoriamente
+        if (empatados.tamaño() == 1) {
+            return empatados.obtener(0);
+        }
+        java.util.Random rand = new java.util.Random();
+        return empatados.obtener(rand.nextInt(empatados.tamaño()));
+    }
+    //REVISAR MAÑANA===============================================
+    // Dentro de Lista_Receptores.java
 /* 
     private ListaEnlazada<Receptor> lista_desempate;
     private ListaEnlazada<Receptor> lista_receptores;

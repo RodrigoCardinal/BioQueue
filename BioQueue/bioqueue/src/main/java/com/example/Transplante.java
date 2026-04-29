@@ -1,8 +1,8 @@
 package com.example;
 
 public class Transplante {
-    Donante donante;
-    Receptor receptor;
+    private Donante donante;
+    private Receptor receptor;
     public Transplante(Donante donante, Receptor receptor) {
         this.donante=donante;
         this.receptor=receptor;
