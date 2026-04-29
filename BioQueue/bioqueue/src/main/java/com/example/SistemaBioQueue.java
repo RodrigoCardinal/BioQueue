@@ -1,96 +1,88 @@
 package com.example;
+
 import java.util.Random;
 
 import com.example.ImplementacionesTDA.ListaEnlazada;
 
 public class SistemaBioQueue {
+
     GestorReceptores gestorReceptores;
+
     public SistemaBioQueue() {
-        gestorReceptores=new GestorReceptores();
+        gestorReceptores = new GestorReceptores();
     }
-    public void filtrarYDesempatar( String organoNecesitado, String tipoSangreDonante) 
-    {
-        
+
+    public void filtrarYDesempatar(String organoNecesitado, String tipoSangreDonante) {
+
         System.out.println("\nBUSCAR RECEPTORES COMPATIBLES");
         System.out.println("Organo: " + organoNecesitado + " | Sangre donante: " + tipoSangreDonante);
         System.out.println("----------------------------------------");
         AnalisisDeSangre compatibilidad = new AnalisisDeSangre();
         ListaEnlazada<Receptor> receptoresCompatibles = new ListaEnlazada<>();
-        
-        for (int i = 0; i < gestorReceptores.getListaReceptores().tamaño(); i++) 
-            {
+
+        for (int i = 0; i < gestorReceptores.getListaReceptores().tamaño(); i++) {
             Receptor receptor = gestorReceptores.getListaReceptores().obtener(i);
-            
-            if (receptor.getOrgano_necesitado().equalsIgnoreCase(organoNecesitado)) 
-                {
-                if (compatibilidad.esCompatible(receptor.getTipo_sangre(), tipoSangreDonante)) 
-                    {
+
+            if (receptor.getOrganoNecesitado().equalsIgnoreCase(organoNecesitado)) {
+                if (compatibilidad.esCompatible(receptor.getTipoSangre(), tipoSangreDonante)) {
                     System.out.println("COMPATIBLE: " + receptor.getNombre());
                     receptoresCompatibles.agregar(receptor);
-                } 
-                else 
-                {
+                } else {
                     System.out.println("INCOMPATIBLE (sangre no compatible): " + receptor.getNombre());
                 }
-            } 
-            else 
-            {
+            } else {
                 System.out.println("INCOMPATIBLE (organo diferente): " + receptor.getNombre());
             }
         }
-               
+
         System.out.println("\nCompatibles encontrados: " + receptoresCompatibles.tamaño());
-        
-        if (receptoresCompatibles.tamaño() > 1) 
-        {
+
+        if (receptoresCompatibles.tamaño() > 1) {
             ListaEnlazada<Receptor> listaDesempate = new ListaEnlazada<>();
-            
+
             for (int i = 0; i < receptoresCompatibles.tamaño(); i++) {
                 listaDesempate.agregar(receptoresCompatibles.obtener(i));
             }
-            
+
             desempateRandom(listaDesempate);
-            
-        } 
-        else if (receptoresCompatibles.tamaño() == 1) 
-            {
+
+        } else if (receptoresCompatibles.tamaño() == 1) {
             Receptor seleccionado = receptoresCompatibles.obtener(0);
             System.out.println("\nReceptor seleccionado: " + seleccionado.getNombre());
-        } 
-        else 
-        {
+        } else {
             System.out.println("\nNo hay receptores compatibles.");
         }
     }
-    
+
     public void desempateRandom(ListaEnlazada<Receptor> listaDesempate) {
         int totalEmpatados = listaDesempate.tamaño();
-        
+
         if (totalEmpatados == 0) {
             System.out.println("No hay receptores en la lista de desempate.");
             return;
         }
-        
+
         Random random = new Random();
         int indiceSeleccionado = random.nextInt(totalEmpatados);
         Receptor receptorSeleccionado = listaDesempate.obtener(indiceSeleccionado);
-        
+
         System.out.println("\nDESEMPATE POR RANDOM:");
         System.out.println("   Lista de empatados: " + totalEmpatados + " receptores");
         System.out.println("   Indice seleccionado: " + indiceSeleccionado);
         System.out.println("   Receptor seleccionado: " + receptorSeleccionado.getNombre());
     }
+
     public void procesarDonante(Donante donante, RegistroTransplantes registro) {
-        String organo = donante.getOrgano_donado();
-        String sangreDonante = donante.getTipo_sangre();
+        String organo = donante.getOrganoDonado();
+        String sangreDonante = donante.getTipoSangre();
         AnalisisDeSangre compatibilidad = new AnalisisDeSangre();
 
         // 1. Filtrar receptores compatibles (órgano y sangre)
         ListaEnlazada<Receptor> compatibles = new ListaEnlazada<>();
         for (int i = 0; i < gestorReceptores.getListaReceptores().tamaño(); i++) {
             Receptor r = gestorReceptores.getListaReceptores().obtener(i);
-            if (r.getOrgano_necesitado().equalsIgnoreCase(organo)
-                    && compatibilidad.esCompatible(r.getTipo_sangre(), sangreDonante)) {
+            if (r.getOrganoNecesitado().equalsIgnoreCase(organo)
+                    && compatibilidad.esCompatible(r.getTipoSangre(), sangreDonante)) {
                 compatibles.agregar(r);
             }
         }
@@ -110,7 +102,7 @@ public class SistemaBioQueue {
         registro.añadirTransplante(donante, seleccionado);
 
         System.out.println("Trasplante realizado: " + donante.getNombre()
-                + " (" + donante.getOrgano_donado() + ", " + donante.getTipo_sangre() + ")"
+                + " (" + donante.getOrganoDonado() + ", " + donante.getTipoSangre() + ")"
                 + " -> " + seleccionado.getNombre()
                 + " (prioridad " + seleccionado.getPrioridad() + ")");
     }
@@ -171,8 +163,8 @@ public class SistemaBioQueue {
         System.out.println("   Índice seleccionado: " + indiceSeleccionado);
         System.out.println("   Receptor seleccionado: " + receptorSeleccionado.getNombre() + " (Cédula: " + receptorSeleccionado.getCedula() + ", Órgano necesario: " + receptorSeleccionado.getOrgano_necesitado() + ", Prioridad: " + receptorSeleccionado.getPrioridad() + ")");
     }
-        */
-/*
+     */
+ /*
  private Lista_Donantes listaDonantes;
     private Lista_Receptores listaReceptores;
     private Lista_PosiblesTipodeSangre tablaSangre;
@@ -202,5 +194,5 @@ public class SistemaBioQueue {
     //Salida del Primer Organo
     Donante donante = organosDisponibles.descolar();
     System.out.println("\nProcesando órgano: " + donante.getOrgano_donado() + " del donante " + donante.getNombre() + " " + donante.getCedula())
- */
+     */
 }

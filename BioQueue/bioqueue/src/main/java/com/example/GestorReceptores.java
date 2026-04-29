@@ -32,9 +32,9 @@ public class GestorReceptores {
                 String[] datos = linea.split(","); //CADA LÍNEA SE DIVIDE EN PARTES UTILIZANDO LA COMA COMO SEPARADOR, Y CADA PARTE SE ALMACENA EN UN ELEMENTO DEL ARREGLO datos.
                 String cedula = datos[0].trim(); //SE ASIGNA CADA ELEMENTO DEL ARREGLO datos A UNA VARIABLE SEPARADA PARA MEJORAR LA LEGIBILIDAD DEL CÓDIGOS, PERO ESTO ES OPCIONAL Y SE PODRÍA HACER DIRECTAMENTE EN EL CONSTRUCTOR DE LA CLASE Receptor.
                 String nombre = datos[1].trim();
-                String organo_necesitado = datos[2].trim();
-                String tipo_sangre = datos[3].trim();
-                int dias_en_espera = Integer.parseInt(datos[4].trim()); //SE CONVIERTE EL QUINTO ELEMENTO DEL ARREGLO datos DE UN STRING A UN ENTERO UTILIZANDO Integer.parseInt(), YA QUE EL NÚMERO DE DÍAS EN ESPERA ES UN VALOR NUMÉRICO.
+                String organoNecesitado = datos[2].trim();
+                String tipoSangre = datos[3].trim();
+                int diasEnEspera = Integer.parseInt(datos[4].trim()); //SE CONVIERTE EL QUINTO ELEMENTO DEL ARREGLO datos DE UN STRING A UN ENTERO UTILIZANDO Integer.parseInt(), YA QUE EL NÚMERO DE DÍAS EN ESPERA ES UN VALOR NUMÉRICO.
                 int prioridad = Integer.parseInt(datos[5].trim());
 
                 /* Dejo aca por si queremos convertir de numero a texto. Es de ka 
@@ -51,8 +51,7 @@ public class GestorReceptores {
                     prioridadNumero = "0"; // valor por defecto si no se reconoce
                 } */
                 // Crear receptor con la prioridad convertida a número (como String)
-                Receptor receptor = new Receptor(cedula, nombre, organo_necesitado,
-                        tipo_sangre, dias_en_espera, prioridad);
+                Receptor receptor = new Receptor(cedula, nombre, organoNecesitado, tipoSangre, diasEnEspera, prioridad);
                 insertarOrdenado(receptor);
             }
         } catch (Exception e) {
@@ -72,7 +71,7 @@ public class GestorReceptores {
 
             if (receptor.getPrioridad() < actual.getPrioridad()
                     || (receptor.getPrioridad() == actual.getPrioridad()
-                    && receptor.getDias_en_espera() > actual.getDias_en_espera())) {
+                    && receptor.getDiasEnEspera() > actual.getDiasEnEspera())) {
                 break;
             }
             i++;
@@ -87,9 +86,9 @@ public class GestorReceptores {
             Receptor receptor = listaReceptores.obtener(i); //SE OBTIENE CADA RECEPTOR DE LA LISTA UTILIZANDO EL MÉTODO obtener() DE LA CLASE ListaEnlazada, PASANDO EL ÍNDICE i COMO ARGUMENTO.
             System.out.println("Cédula: " + receptor.getCedula()); //SE IMPRIMEN LOS ATRIBUTOS DE CADA RECEPTOR UTILIZANDO LOS MÉTODOS GETTERS DEFINIDOS EN LA CLASE Receptor.
             System.out.println("Nombre: " + receptor.getNombre());
-            System.out.println("Órgano Necesitado: " + receptor.getOrgano_necesitado());
-            System.out.println("Tipo de Sangre: " + receptor.getTipo_sangre());
-            System.out.println("Días en Espera: " + receptor.getDias_en_espera());
+            System.out.println("Órgano Necesitado: " + receptor.getOrganoNecesitado());
+            System.out.println("Tipo de Sangre: " + receptor.getTipoSangre());
+            System.out.println("Días en Espera: " + receptor.getDiasEnEspera());
             System.out.println("Prioridad: " + receptor.getPrioridad());
             System.out.println("---------------------------");
         }

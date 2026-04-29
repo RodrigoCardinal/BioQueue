@@ -27,7 +27,7 @@ public class RegistroTransplantes {
             toReturn.append("----------------------------------------------------------------------------\r\n");
             toReturn.append("CI receptor: "+listaTransplantes.obtener(i).getReceptor().getCedula()+".\r\n");
             toReturn.append("ÇI donante: "+listaTransplantes.obtener(i).getDonante().getCedula()+".\r\n");
-            toReturn.append("Órgano donado: "+listaTransplantes.obtener(i).getDonante().getOrgano_donado()+".\r\n");
+            toReturn.append("Órgano donado: "+listaTransplantes.obtener(i).getDonante().getOrganoDonado()+".\r\n");
             toReturn.append("----------------------------------------------------------------------------\r\n");
         }
         return(toReturn.toString());

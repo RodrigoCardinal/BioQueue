@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public class AnalisisDeSangre {
 
-    private final String[] Onegativo = {"O-"};
-    private final String[] Opositivo = {"O-", "O+"};
-    private final String[] Anegativo = {"O-", "A-"};
-    private final String[] Apositivo = {"O-", "A-", "O+", "A+"};
-    private final String[] Bnegativo = {"O-", "B-"};
-    private final String[] Bpositivo = {"O-", "B-", "O+", "B+"};
-    private final String[] ABnegativo = {"O-", "B-", "A-", "AB-"};
-    private final String[] ABpositivo = {"O-", "B-", "A-", "AB-", "O+", "B+", "A+", "AB+"};
+    private final String[] oNegativo = {"O-"};
+    private final String[] oPositivo = {"O-", "O+"};
+    private final String[] aNegativo = {"O-", "A-"};
+    private final String[] aPositivo = {"O-", "A-", "O+", "A+"};
+    private final String[] bNegativo = {"O-", "B-"};
+    private final String[] bPositivo = {"O-", "B-", "O+", "B+"};
+    private final String[] abNegativo = {"O-", "B-", "A-", "AB-"};
+    private final String[] abPositivo = {"O-", "B-", "A-", "AB-", "O+", "B+", "A+", "AB+"};
 
     //private ListaEnlazada<String> Onegativo;   // qué tipos puede recibir O-
     //private ListaEnlazada<String> Opositivo;   // qué tipos puede recibir O+
@@ -66,14 +66,14 @@ public class AnalisisDeSangre {
     {
         StringBuilder toReturn=new StringBuilder();
         toReturn.append("COMPATIBILIDADES DE SANGRE (RECEPTOR <- DONANTE)\r\n");
-        toReturn.append("O- puede recibir de: "+Arrays.toString(Onegativo)+"\r\n");
-        toReturn.append("O+ puede recibir de: "+Arrays.toString(Opositivo)+"\r\n");
-        toReturn.append("A- puede recibir de: "+Arrays.toString(Anegativo)+"\r\n");
-        toReturn.append("A+ puede recibir de: "+Arrays.toString(Apositivo)+"\r\n");
-        toReturn.append("B- puede recibir de: "+Arrays.toString(Bnegativo)+"\r\n");
-        toReturn.append("B+ puede recibir de: "+Arrays.toString(Bpositivo)+"\r\n");
-        toReturn.append("AB- puede recibir de: "+Arrays.toString(ABnegativo)+"\r\n");
-        toReturn.append("AB+ puede recibir de: "+Arrays.toString(ABpositivo)+"\r\n");
+        toReturn.append("O- puede recibir de: "+Arrays.toString(oNegativo)+"\r\n");
+        toReturn.append("O+ puede recibir de: "+Arrays.toString(oPositivo)+"\r\n");
+        toReturn.append("A- puede recibir de: "+Arrays.toString(aNegativo)+"\r\n");
+        toReturn.append("A+ puede recibir de: "+Arrays.toString(aPositivo)+"\r\n");
+        toReturn.append("B- puede recibir de: "+Arrays.toString(bNegativo)+"\r\n");
+        toReturn.append("B+ puede recibir de: "+Arrays.toString(bPositivo)+"\r\n");
+        toReturn.append("AB- puede recibir de: "+Arrays.toString(abNegativo)+"\r\n");
+        toReturn.append("AB+ puede recibir de: "+Arrays.toString(abPositivo)+"\r\n");
         toReturn.append("---------------------------------------------------------------------------------------\r\n");
         System.out.println(toReturn.toString());
         //     System.out.println(" COMPATIBILIDADES DE SANGRE (RECEPTOR <- DONANTE) ");
@@ -122,56 +122,56 @@ public class AnalisisDeSangre {
     public boolean esCompatible(String tipoReceptor, String tipoDonante) {
         switch (tipoReceptor) {
             case "O-":
-                for (String sangre : Onegativo) {
+                for (String sangre : oNegativo) {
                     if (sangre.equals(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "O+":
-                for (String sangre : Opositivo) {
+                for (String sangre : oPositivo) {
                     if (sangre.equals(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "A-":
-                for (String sangre : Anegativo) {
+                for (String sangre : aNegativo) {
                     if (sangre.equals(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "A+":
-                for (String sangre : Apositivo) {
+                for (String sangre : aPositivo) {
                     if (sangre.equals(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "B-":
-                for (String sangre : Bnegativo) {
+                for (String sangre : bNegativo) {
                     if (sangre.equals(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "B+":
-                for (String sangre : Bpositivo) {
+                for (String sangre : bPositivo) {
                     if (sangre.equals(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "AB-":
-                for (String sangre : ABnegativo) {
+                for (String sangre : abNegativo) {
                     if (sangre.equals(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "AB+":
-                for (String sangre : ABpositivo) {
+                for (String sangre : abPositivo) {
                     if (sangre.equals(tipoDonante)) {
                         return true;
                     }
