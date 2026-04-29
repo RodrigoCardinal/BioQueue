@@ -71,7 +71,7 @@ public class GestorReceptores {
 
             if (receptor.getPrioridad() < actual.getPrioridad()
                     || (receptor.getPrioridad() == actual.getPrioridad()
-                    && receptor.getDias_en_espera() > actual.getDias_en_espera())) {
+                    && receptor.getDiasEnEspera() > actual.getDiasEnEspera())) {
                 break;
             }
             i++;
@@ -88,7 +88,7 @@ public class GestorReceptores {
             System.out.println("Nombre: " + receptor.getNombre());
             System.out.println("Órgano Necesitado: " + receptor.getOrganoNecesitado());
             System.out.println("Tipo de Sangre: " + receptor.getTipoSangre());
-            System.out.println("Días en Espera: " + receptor.getDias_en_espera());
+            System.out.println("Días en Espera: " + receptor.getDiasEnEspera());
             System.out.println("Prioridad: " + receptor.getPrioridad());
             System.out.println("---------------------------");
         }

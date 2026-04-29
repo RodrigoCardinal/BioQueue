@@ -16,8 +16,8 @@ public class GestorDonantes {
     public GestorDonantes() {
         this.listaDonantes=new ListaEnlazada<Donante>();
     }
-    public void agregarDonante(String cedula, String nombre, String organoDonado, String tipo_sangre) {
-        listaDonantes.agregar(new Donante(cedula, nombre, organoDonado, tipo_sangre));
+    public void agregarDonante(String cedula, String nombre, String organoDonado, String tipoSangre) {
+        listaDonantes.agregar(new Donante(cedula, nombre, organoDonado, tipoSangre));
     }
     
     public void cargarDonantes(String archivo) {

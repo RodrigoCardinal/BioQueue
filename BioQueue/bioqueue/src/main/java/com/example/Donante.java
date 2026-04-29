@@ -27,8 +27,8 @@ public class Donante extends Persona{
         this.nombre = nombre;
     }
 
-    public void setOrgano_donado(String organo_donado) {
-        this.organoDonado = organo_donado;
+    public void setOrgano_donado(String organoDonado) {
+        this.organoDonado = organoDonado;
     }
 
    // public void setTipo_sangre(String tipo_sangre) {

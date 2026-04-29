@@ -19,7 +19,7 @@ public class Receptor extends Persona
         return organoNecesitado;
     }
 
-    public int getDias_en_espera() {
+    public int getDiasEnEspera() {
         return diasEnEspera;
     }
     public int getPrioridad() {
