@@ -3,13 +3,14 @@ package com.example;
 public class App {
     public static void main(String[] args) {
         // Cargar receptores
-        Lista_Receptores listaReceptores = new Lista_Receptores();
+        SistemaBioQueue sistemaBioQueue=new SistemaBioQueue();
+        GestorReceptores listaReceptores = new GestorReceptores();
         listaReceptores.archivoReceptores("BioQueue/bioqueue/src/Resources/Receptores.txt");
         System.out.println("=== RECEPTORES INICIALES ===");
         listaReceptores.MostrarReceptores();
 
         // Cargar donantes
-        Lista_Donantes listaDonantes = new Lista_Donantes();
+        GestorDonantes listaDonantes = new GestorDonantes();
         listaDonantes.cargarDonantes("BioQueue/bioqueue/src/Resources/Donantes.txt");
         System.out.println("\n=== DONANTES CARGADOS ===");
         listaDonantes.MostrarDonantes();
@@ -21,7 +22,7 @@ public class App {
         System.out.println("\n=== PROCESANDO DONANTES ===");
         for (int i = 0; i < listaDonantes.getListaDonantes().tamaño(); i++) {
             Donante d = listaDonantes.getListaDonantes().obtener(i);
-            listaReceptores.procesarDonante(d, registro);
+            sistemaBioQueue.procesarDonante(d, registro);
         }
 
         // Mostrar resultados finales
