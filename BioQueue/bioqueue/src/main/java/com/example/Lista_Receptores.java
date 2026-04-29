@@ -2,18 +2,22 @@ package com.example;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Random;
 
 import com.example.ImplementacionesTDA.ListaEnlazada;
 
 public class Lista_Receptores {
 
     private ListaEnlazada<Receptor> listaReceptores; //ESTA ES LA LISTA ENLAZADA QUE VA A ALMACENAR LOS RECEPTORES, ES DECIR, LOS NODOS DE LA LISTA VAN A CONTENER OBJETOS DE TIPO RECEPTOR.    
+    private ListaEnlazada<Receptor> lista_desempate;
 
-    //  public Lista_Receptores(String receptores) {
-    //      this.listaReceptores = new ListaEnlazada<>(); //SE INICIALIZA LA LISTA ENLAZADA VACÍA CUANDO SE CREA UNA INSTANCIA DE LA CLASE Lista_Receptores.
-    //     this.archivoReceptores(receptores); //SE LLAMA AL MÉTODO archivoReceptores PARA CARGAR LOS DATOS DE LOS RECEPTORES DESDE UN ARCHIVO CUYO NOMBRE SE PASA COMO ARGUMENTO AL CONSTRUCTOR.   
-    // }
-    public Lista_Receptores() {
+    public Lista_Receptores(String receptores) 
+{ 
+    this.listaReceptores = new ListaEnlazada<>(); //SE INICIALIZA LA LISTA ENLAZADA VACÍA CUANDO SE CREA UNA INSTANCIA DE LA CLASE Lista_Receptores.
+    this.archivoReceptores(receptores); //SE LLAMA AL MÉTODO archivoReceptores PARA CARGAR LOS DATOS DE LOS RECEPTORES DESDE UN ARCHIVO CUYO NOMBRE SE PASA COMO ARGUMENTO AL CONSTRUCTOR.   
+   this.lista_desempate = new ListaEnlazada<>();    }
+    
+   public Lista_Receptores() {
         this.listaReceptores = new ListaEnlazada<Receptor>();
     }
 
@@ -54,7 +58,7 @@ public class Lista_Receptores {
         }
     }
 
-    private void insertarOrdenado(Receptor receptor) {
+    private void insertarOrdenado(Receptor receptor) { //metodo que organiza segun prioridad 1 -> 2 -> 3
         if (listaReceptores.esVacia()) {
             listaReceptores.agregar(receptor);
             return;
@@ -74,6 +78,7 @@ public class Lista_Receptores {
         listaReceptores.insertar(i, receptor);
     }
 
+
     public void MostrarReceptores() //ESTE MÉTODO SE UTILIZA PARA MOSTRAR LOS DATOS DE LOS RECEPTORES ALMACENADOS EN LA LISTA ENLAZADA listaReceptores. RECORRE LA LISTA Y IMPRIME LOS ATRIBUTOS DE CADA RECEPTOR.
     {
         for (int i = 0; i < listaReceptores.tamaño(); i++) //SE UTILIZA UN BUCLE FOR PARA RECORRER LA LISTA ENLAZADA DESDE EL PRIMER ELEMENTO HASTA EL ÚLTIMO, UTILIZANDO EL MÉTODO tamaño() PARA OBTENER EL NÚMERO DE ELEMENTOS EN LA LISTA.
@@ -89,4 +94,152 @@ public class Lista_Receptores {
         }
     }
 
+    public void filtrarYDesempatar( String organoNecesitado, String tipoSangreDonante) 
+    {
+        
+        System.out.println("\nBUSCAR RECEPTORES COMPATIBLES");
+        System.out.println("Organo: " + organoNecesitado + " | Sangre donante: " + tipoSangreDonante);
+        System.out.println("----------------------------------------");
+        Lista_PosiblesTipodeSangre compatibilidad = new Lista_PosiblesTipodeSangre();
+        ListaEnlazada<Receptor> receptoresCompatibles = new ListaEnlazada<>();
+        
+        for (int i = 0; i < listaReceptores.tamaño(); i++) 
+            {
+            Receptor receptor = listaReceptores.obtener(i);
+            
+            if (receptor.getOrgano_necesitado().equalsIgnoreCase(organoNecesitado)) 
+                {
+                if (compatibilidad.esCompatible(receptor.getTipo_sangre(), tipoSangreDonante)) 
+                    {
+                    System.out.println("COMPATIBLE: " + receptor.getNombre());
+                    receptoresCompatibles.agregar(receptor);
+                } 
+                else 
+                {
+                    System.out.println("INCOMPATIBLE (sangre no compatible): " + receptor.getNombre());
+                }
+            } 
+            else 
+            {
+                System.out.println("INCOMPATIBLE (organo diferente): " + receptor.getNombre());
+            }
+        }
+               
+        System.out.println("\nCompatibles encontrados: " + receptoresCompatibles.tamaño());
+        
+        if (receptoresCompatibles.tamaño() > 1) 
+        {
+            this.lista_desempate = new ListaEnlazada<>();
+            
+            for (int i = 0; i < receptoresCompatibles.tamaño(); i++) {
+                this.lista_desempate.agregar(receptoresCompatibles.obtener(i));
+            }
+            
+            desempateRandom();
+            
+        } 
+        else if (receptoresCompatibles.tamaño() == 1) 
+            {
+            Receptor seleccionado = receptoresCompatibles.obtener(0);
+            System.out.println("\nReceptor seleccionado: " + seleccionado.getNombre());
+        } 
+        else 
+        {
+            System.out.println("\nNo hay receptores compatibles.");
+        }
+    }
+    
+    public void desempateRandom() {
+        int totalEmpatados = lista_desempate.tamaño();
+        
+        if (totalEmpatados == 0) {
+            System.out.println("No hay receptores en la lista de desempate.");
+            return;
+        }
+        
+        Random random = new Random();
+        int indiceSeleccionado = random.nextInt(totalEmpatados);
+        Receptor receptorSeleccionado = lista_desempate.obtener(indiceSeleccionado);
+        
+        System.out.println("\nDESEMPATE POR RANDOM:");
+        System.out.println("   Lista de empatados: " + totalEmpatados + " receptores");
+        System.out.println("   Indice seleccionado: " + indiceSeleccionado);
+        System.out.println("   Receptor seleccionado: " + receptorSeleccionado.getNombre());
+    }
+    //REVISAR MAÑANA===============================================
+    // Dentro de Lista_Receptores.java
+
+public Receptor buscarReceptor(String cedula) {
+    for (int i = 0; i < listaReceptores.tamaño(); i++) {
+        Receptor r = listaReceptores.obtener(i);
+        if (r.getCedula().equals(cedula)) return r;
+    }
+    return null;
+}
+
+public boolean eliminarReceptor(String cedula) {
+    for (int i = 0; i < listaReceptores.tamaño(); i++) {
+        if (listaReceptores.obtener(i).getCedula().equals(cedula)) {
+            listaReceptores.eliminar(i);
+            return true;
+        }
+    }
+    return false;
+}
+
+public void procesarDonante(Donante donante, RegistroTransplantes registro) {
+    String organo = donante.getOrgano_donado();
+    String sangreDonante = donante.getTipo_sangre();
+    Lista_PosiblesTipodeSangre compatibilidad = new Lista_PosiblesTipodeSangre();
+
+    // 1. Filtrar receptores compatibles (órgano y sangre)
+    ListaEnlazada<Receptor> compatibles = new ListaEnlazada<>();
+    for (int i = 0; i < listaReceptores.tamaño(); i++) {
+        Receptor r = listaReceptores.obtener(i);
+        if (r.getOrgano_necesitado().equalsIgnoreCase(organo)
+                && compatibilidad.esCompatible(r.getTipo_sangre(), sangreDonante)) {
+            compatibles.agregar(r);
+        }
+    }
+
+    if (compatibles.tamaño() == 0) {
+        System.out.println("No hay receptores compatibles para " + donante.getNombre());
+        return;
+    }
+
+    // 2. Seleccionar el mejor según prioridad (y desempate aleatorio)
+    Receptor seleccionado = seleccionarMejorReceptor(compatibles);
+
+    // 3. Eliminar receptor de la lista de espera
+    eliminarReceptor(seleccionado.getCedula());
+
+    // 4. Registrar trasplante
+    registro.añadirTransplante(donante, seleccionado);
+
+    System.out.println("Trasplante realizado: " + donante.getNombre()
+            + " (" + donante.getOrgano_donado() + ", " + donante.getTipo_sangre() + ")"
+            + " -> " + seleccionado.getNombre()
+            + " (prioridad " + seleccionado.getPrioridad() + ")");
+}
+
+private Receptor seleccionarMejorReceptor(ListaEnlazada<Receptor> compatibles) {
+    // Encontrar la prioridad más baja (mayor urgencia)
+    int mejorPrioridad = Integer.MAX_VALUE;
+    for (int i = 0; i < compatibles.tamaño(); i++) {
+        int p = compatibles.obtener(i).getPrioridad();
+        if (p < mejorPrioridad) mejorPrioridad = p;
+    }
+
+    // Recolectar todos los que tienen esa prioridad
+    ListaEnlazada<Receptor> empatados = new ListaEnlazada<>();
+    for (int i = 0; i < compatibles.tamaño(); i++) {
+        Receptor r = compatibles.obtener(i);
+        if (r.getPrioridad() == mejorPrioridad) empatados.agregar(r);
+    }
+
+    // Si hay más de uno, elegir aleatoriamente
+    if (empatados.tamaño() == 1) return empatados.obtener(0);
+    java.util.Random rand = new java.util.Random();
+    return empatados.obtener(rand.nextInt(empatados.tamaño()));
+}
 }

@@ -53,4 +53,27 @@ public class Lista_Donantes {
 
         }
     }
+// REVISAR MAÑANA===========================================================================
+
+public Donante buscarDonante(String cedula) {
+    for (int i = 0; i < listaDonantes.tamaño(); i++) {
+        Donante d = listaDonantes.obtener(i);
+        if (d.getCedula().equals(cedula)) return d;
+    }
+    return null;
 }
+
+public boolean eliminarDonante(String cedula) {
+    for (int i = 0; i < listaDonantes.tamaño(); i++) {
+        if (listaDonantes.obtener(i).getCedula().equals(cedula)) {
+            listaDonantes.eliminar(i);
+            return true;
+        }
+    }
+    return false;
+}
+
+// Getter para acceder a la lista desde main (si es necesario)
+public ListaEnlazada<Donante> getListaDonantes() {
+    return listaDonantes;
+}}
