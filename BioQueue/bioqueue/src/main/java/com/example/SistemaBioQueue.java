@@ -6,12 +6,14 @@ import com.example.ImplementacionesTDA.ListaEnlazada;
 
 public class SistemaBioQueue {
 
-    GestorReceptores gestorReceptores;
+    private GestorReceptores gestorReceptores;
 
     public SistemaBioQueue() {
         gestorReceptores = new GestorReceptores();
     }
-
+    public GestorReceptores getGestorReceptores() {
+        return(gestorReceptores);
+    }
     public void filtrarYDesempatar(String organoNecesitado, String tipoSangreDonante) {
 
         System.out.println("\nBUSCAR RECEPTORES COMPATIBLES");
