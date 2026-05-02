@@ -76,4 +76,5 @@ public boolean eliminarDonante(String cedula) {
 // Getter para acceder a la lista desde main (si es necesario)
 public ListaEnlazada<Donante> getListaDonantes() {
     return listaDonantes;
-}}
+}
+}

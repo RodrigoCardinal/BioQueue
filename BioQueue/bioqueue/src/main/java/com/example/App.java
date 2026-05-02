@@ -4,14 +4,14 @@ public class App {
     public static void main(String[] args) {
         // Cargar receptores
         SistemaBioQueue sistemaBioQueue=new SistemaBioQueue();
-        GestorReceptores listaReceptores = new GestorReceptores();
-        listaReceptores.archivoReceptores("BioQueue/bioqueue/src/Resources/Receptores.txt");
+        GestorReceptores listaReceptores = sistemaBioQueue.getGestorReceptores();
+        listaReceptores.archivoReceptores("BioQueue\\bioqueue\\src\\Resources\\Receptores.csv");
         System.out.println("=== RECEPTORES INICIALES ===");
         listaReceptores.MostrarReceptores();
 
         // Cargar donantes
         GestorDonantes listaDonantes = new GestorDonantes();
-        listaDonantes.cargarDonantes("BioQueue/bioqueue/src/Resources/Donantes.txt");
+        listaDonantes.cargarDonantes("BioQueue\\bioqueue\\src\\Resources\\Donantes.csv");
         System.out.println("\n=== DONANTES CARGADOS ===");
         listaDonantes.MostrarDonantes();
 
