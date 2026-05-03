@@ -10,7 +10,9 @@ public class ListaEnlazada<T> implements TDALista<T> //LA CLASE LISTAENLAZADA IM
     {
         this.primero = null;//INICIALIZA EL ATRIBUTO PRIMERO COMO NULL, LO QUE SIGNIFICA QUE LA LISTA ESTÁ VACÍA AL CREARLA.
     }
-    
+    public TDANodo<T> getPrimero() {
+        return(primero);
+    }
     // implementar métodos del TDALista
     @Override
     public boolean agregar(T Receptores) {
