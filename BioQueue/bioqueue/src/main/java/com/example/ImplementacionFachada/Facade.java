@@ -9,16 +9,10 @@ public class Facade {
     private static Facade instancia;
     private SistemaBioQueue sistema;
     private ILector lector;
-    private Facade() {
-        this.sistema = new SistemaBioQueue();
-        this.lector=new Lector();
-    }
 
-    public static Facade Instancia() {
-        if (instancia == null) {
-            instancia = new Facade();
-        }
-        return (instancia);
+    public Facade(ILector lector) {
+        this.sistema = new SistemaBioQueue();
+        this.lector = lector;
     }
 
     public String mostrarMenu() {
@@ -56,15 +50,15 @@ public class Facade {
             sistema.getGestorDonantes().agregarDonante(parametros[0], parametros[1], parametros[2], parametros[3]);
             return ("Donante agregado correctamente\r\n");
         } catch (Exception e) {
-            return ("Hubo un error con el ingreso de los parámetros.\r\n");
+            return ("Hubo un error al intentar ingresar al donante.\r\n");
         }
     }
 
     public String buscarDonante() {
         String linea = lector.leerLinea();
-        Donante result=sistema.getGestorDonantes().buscarDonante(linea);
-        if(result!=null) {
-            return ("Donante encontrado:\r\nCédula: " + result.getCedula() + "\r\nNombre: " + result.getNombre() + "\r\nÓrgano donado: " + result.getOrganoDonado() + "\r\nTipo de Sangre: " + result.getTipoSangre()+". \r\n");
+        Donante result = sistema.getGestorDonantes().buscarDonante(linea);
+        if (result != null) {
+            return ("Donante encontrado:\r\nCédula: " + result.getCedula() + "\r\nNombre: " + result.getNombre() + "\r\nÓrgano donado: " + result.getOrganoDonado() + "\r\nTipo de Sangre: " + result.getTipoSangre() + ". \r\n");
         } else {
             return ("Donante no encontrado. \r\n");
         }
@@ -76,7 +70,7 @@ public class Facade {
         if (result) {
             return ("Donante eliminado correctamente. \r\n");
         } else {
-            return ("Hubo un error al intentar eliminar al donante. \r\n");
+            return ("Donante no encontrado. \r\n");
         }
     }
 
@@ -92,10 +86,10 @@ public class Facade {
     public String registrarReceptor() {
         String linea = lector.leerLinea();
         String[] parametros = linea.split(",");
-        boolean result = sistema.getGestorReceptores().agregarReceptor(parametros[0], parametros[1], parametros[2], parametros[3], Integer.valueOf(parametros[4]), Integer.valueOf(parametros[5]));
-        if (result) {
+        try {
+            sistema.getGestorReceptores().agregarReceptor(parametros[0], parametros[1], parametros[2], parametros[3], Integer.valueOf(parametros[4]), Integer.valueOf(parametros[5]));
             return ("Receptor registrado correctamente. \r\n");
-        } else {
+        } catch (Exception e) {
             return ("Hubo un error al ingresar al receptor. \r\n");
         }
     }
@@ -104,7 +98,7 @@ public class Facade {
         String linea = lector.leerLinea();
         Receptor result = sistema.getGestorReceptores().buscarReceptor(linea);
         if (result != null) {
-            return ("Receptor encontrado:\r\nCédula: " + result.getCedula() + "\r\nNombre: " + result.getNombre() + "\r\nÓrgano Necesitado: " + result.getOrganoNecesitado() + "\r\nTipo de Sangre: " + result.getTipoSangre() + "\r\nDías en Espera: " + result.getDiasEnEspera() + "\r\nPrioridad: " + result.getPrioridad()+". \r\n");
+            return ("Receptor encontrado:\r\nCédula: " + result.getCedula() + "\r\nNombre: " + result.getNombre() + "\r\nÓrgano Necesitado: " + result.getOrganoNecesitado() + "\r\nTipo de Sangre: " + result.getTipoSangre() + "\r\nDías en Espera: " + result.getDiasEnEspera() + "\r\nPrioridad: " + result.getPrioridad() + ". \r\n");
         } else {
             return ("Receptor no encontrado. \r\n");
         }
