@@ -22,6 +22,9 @@ public class GestorReceptores {
     public ListaEnlazada<Receptor> getListaReceptores() {
         return listaReceptores;
     }
+    public void agregarReceptor(String cedula, String nombre, String organoNecesitado, String tipoSangre, int diasEnEspera, int prioridad) {
+        listaReceptores.agregar(new Receptor(cedula, nombre, organoNecesitado, tipoSangre, diasEnEspera, prioridad));
+    }
     
     public void archivoReceptores(String receptores) {
         try (BufferedReader lector = new BufferedReader(new FileReader(receptores))) //SE UTILIZA UN BufferedReader PARA LEER EL ARCHIVO DE TEXTO QUE CONTIENE LOS DATOS DE LOS RECEPTORES. EL NOMBRE DEL ARCHIVO SE PASA COMO ARGUMENTO AL CONSTRUCTOR DE LA CLASE Lista_Receptores.
@@ -90,7 +93,7 @@ public class GestorReceptores {
             System.out.println("Tipo de Sangre: " + receptor.getTipoSangre());
             System.out.println("Días en Espera: " + receptor.getDiasEnEspera());
             System.out.println("Prioridad: " + receptor.getPrioridad());
-            System.out.println("---------------------------");
+            System.out.println("--------------------------------");
         }
     }
 
