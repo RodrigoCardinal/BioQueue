@@ -1,9 +1,9 @@
 package com.example;
 
-public class Transplante {
+public class Trasplante {
     private Donante donante;
     private Receptor receptor;
-    public Transplante(Donante donante, Receptor receptor) {
+    public Trasplante(Donante donante, Receptor receptor) {
         this.donante=donante;
         this.receptor=receptor;
     }
