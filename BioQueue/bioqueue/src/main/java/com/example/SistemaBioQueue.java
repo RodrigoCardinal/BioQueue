@@ -28,7 +28,7 @@ public class SistemaBioQueue {
     public RegistroTrasplantes getRegistroTrasplantes() {
         return registroTrasplantes;
     }
-
+/* 
     public void filtrarYDesempatar(String organoNecesitado, String tipoSangreDonante) {
 
         System.out.println("\nBUSCAR RECEPTORES COMPATIBLES");
@@ -71,7 +71,7 @@ public class SistemaBioQueue {
             System.out.println("\nNo hay receptores compatibles.");
         }
     }
-
+*/
     public void desempateRandom(ListaEnlazada<Receptor> listaDesempate) {
         int totalEmpatados = listaDesempate.tamaño();
 

@@ -70,9 +70,10 @@ public class App {
       11 → SALIR
 
          */
-        Facade facade = Facade.Instancia();
+        
         IImpresion impresion=new Impresion();
         ILector lector=new Lector();
+        Facade facade = new Facade(lector);
         String opcion = "";
         while (!opcion.equals("-1")) {
             impresion.imprimir(facade.mostrarMenu());
