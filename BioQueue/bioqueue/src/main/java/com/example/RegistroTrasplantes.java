@@ -1,6 +1,7 @@
 package com.example;
 
 import com.example.ImplementacionesTDA.ListaEnlazada;
+import com.example.ImplementacionesTDA.TDANodo;
 
 public class RegistroTrasplantes {
 
@@ -13,10 +14,12 @@ public class RegistroTrasplantes {
         this.listaTrasplantes.agregar(new Trasplante(donante, receptor));
     }
     public Trasplante buscarTrasplante(String CIdonante, String CIreceptor) {
-        for(int i=0; i<listaTrasplantes.tamaño();i++) {
-            if((listaTrasplantes.obtener(i).getDonante().getCedula().equals(CIdonante))&&(listaTrasplantes.obtener(i).getReceptor().getCedula().equals(CIreceptor))) {
-                return(listaTrasplantes.obtener(i));
+        TDANodo<Trasplante> aux=listaTrasplantes.getPrimero();
+        while(aux!=null) {
+            if((aux.getDato().getDonante().getCedula().equals(CIdonante))&&(aux.getDato().getReceptor().getCedula().equals(CIreceptor))) {
+                return(aux.getDato());
             }
+            aux=aux.getSiguiente();
         }
         return(null);
     }
@@ -24,12 +27,14 @@ public class RegistroTrasplantes {
     {
         StringBuilder toReturn= new StringBuilder();
         toReturn.append("Se encontraron: "+String.valueOf(listaTrasplantes.tamaño())+" transplantes realizados.\r\n");
-        for(int i =0; i<listaTrasplantes.tamaño(); i++) {
+        TDANodo<Trasplante> aux=listaTrasplantes.getPrimero();
+        while(aux!=null) {
             toReturn.append("----------------------------------------------------------------------------\r\n");
-            toReturn.append("CI receptor: "+listaTrasplantes.obtener(i).getReceptor().getCedula()+".\r\n");
-            toReturn.append("ÇI donante: "+listaTrasplantes.obtener(i).getDonante().getCedula()+".\r\n");
-            toReturn.append("Órgano donado: "+listaTrasplantes.obtener(i).getDonante().getOrganoDonado()+".\r\n");
+            toReturn.append("CI receptor: "+aux.getDato().getReceptor().getCedula()+".\r\n");
+            toReturn.append("ÇI donante: "+aux.getDato().getDonante().getCedula()+".\r\n");
+            toReturn.append("Órgano donado: "+aux.getDato().getDonante().getOrganoDonado()+".\r\n");
             toReturn.append("----------------------------------------------------------------------------\r\n");
+            aux=aux.getSiguiente();
         }
         return(toReturn.toString());
     }

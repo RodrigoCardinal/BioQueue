@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import com.example.ImplementacionesTDA.ListaEnlazada;
+import com.example.ImplementacionesTDA.TDANodo;
 
 public class GestorReceptores {
 
@@ -21,15 +22,16 @@ public class GestorReceptores {
     public ListaEnlazada<Receptor> getListaReceptores() {
         return listaReceptores;
     }
+
     public boolean agregarReceptor(String cedula, String nombre, String organoNecesitado, String tipoSangre, int diasEnEspera, int prioridad) {
         try {
             listaReceptores.agregar(new Receptor(cedula, nombre, organoNecesitado, tipoSangre, diasEnEspera, prioridad));
-            return(true);
+            return (true);
         } catch (Exception e) {
-            return(false);
+            return (false);
         }
     }
-    
+
     public String archivoReceptores(String receptores) {
         try (BufferedReader lector = new BufferedReader(new FileReader(receptores))) //SE UTILIZA UN BufferedReader PARA LEER EL ARCHIVO DE TEXTO QUE CONTIENE LOS DATOS DE LOS RECEPTORES. EL NOMBRE DEL ARCHIVO SE PASA COMO ARGUMENTO AL CONSTRUCTOR DE LA CLASE Lista_Receptores.
         {
@@ -61,9 +63,9 @@ public class GestorReceptores {
                 Receptor receptor = new Receptor(cedula, nombre, organoNecesitado, tipoSangre, diasEnEspera, prioridad);
                 insertarOrdenado(receptor);
             }
-            return("Archivo leído correctamente, se cargaron: "+String.valueOf(listaReceptores.tamaño())+" receptores.\r\n");
+            return ("Archivo leído correctamente, se cargaron: " + String.valueOf(listaReceptores.tamaño()) + " receptores.\r\n");
         } catch (Exception e) {
-            return("Error al leer receptores: " + e.getMessage()+".\r\n");//tira error si no puede leer el archivo, mostrando un mensaje de error con la descripción del problema.
+            return ("Error al leer receptores: " + e.getMessage() + ".\r\n");//tira error si no puede leer el archivo, mostrando un mensaje de error con la descripción del problema.
         }
     }
 
@@ -73,15 +75,15 @@ public class GestorReceptores {
             return;
         }
 
-        int i = 0;
-        while (i < listaReceptores.tamaño()) {
-            Receptor actual = listaReceptores.obtener(i);
-
-            if (receptor.getPrioridad() < actual.getPrioridad()
-                    || (receptor.getPrioridad() == actual.getPrioridad()
-                    && receptor.getDiasEnEspera() > actual.getDiasEnEspera())) {
+        TDANodo<Receptor> actual = listaReceptores.getPrimero();
+        int i=0;
+        while (actual != null) {
+            if (receptor.getPrioridad() < actual.getDato().getPrioridad()
+                    || (receptor.getPrioridad() == actual.getDato().getPrioridad()
+                    && receptor.getDiasEnEspera() > actual.getDato().getDiasEnEspera())) {
                 break;
             }
+            actual = actual.getSiguiente();
             i++;
         }
         listaReceptores.insertar(i, receptor);
@@ -89,41 +91,44 @@ public class GestorReceptores {
 
     public String MostrarReceptores() //ESTE MÉTODO SE UTILIZA PARA MOSTRAR LOS DATOS DE LOS RECEPTORES ALMACENADOS EN LA LISTA ENLAZADA listaReceptores. RECORRE LA LISTA Y IMPRIME LOS ATRIBUTOS DE CADA RECEPTOR.
     {
-        StringBuilder resultado=new StringBuilder();
-        resultado.append("Se encontraron: "+String.valueOf(listaReceptores.tamaño())+" receptores. \r\n");
-        for (int i = 0; i < listaReceptores.tamaño(); i++) //SE UTILIZA UN BUCLE FOR PARA RECORRER LA LISTA ENLAZADA DESDE EL PRIMER ELEMENTO HASTA EL ÚLTIMO, UTILIZANDO EL MÉTODO tamaño() PARA OBTENER EL NÚMERO DE ELEMENTOS EN LA LISTA.
+        StringBuilder resultado = new StringBuilder();
+        TDANodo<Receptor> receptor = listaReceptores.getPrimero();
+        resultado.append("Se encontraron: " + String.valueOf(listaReceptores.tamaño()) + " receptores. \r\n");
+        while (receptor != null) //SE UTILIZA UN BUCLE FOR PARA RECORRER LA LISTA ENLAZADA DESDE EL PRIMER ELEMENTO HASTA EL ÚLTIMO, UTILIZANDO EL MÉTODO tamaño() PARA OBTENER EL NÚMERO DE ELEMENTOS EN LA LISTA.
         {
-            Receptor receptor = listaReceptores.obtener(i); //SE OBTIENE CADA RECEPTOR DE LA LISTA UTILIZANDO EL MÉTODO obtener() DE LA CLASE ListaEnlazada, PASANDO EL ÍNDICE i COMO ARGUMENTO.
-            resultado.append("Cédula: " + receptor.getCedula()+". \r\n"); //SE IMPRIMEN LOS ATRIBUTOS DE CADA RECEPTOR UTILIZANDO LOS MÉTODOS GETTERS DEFINIDOS EN LA CLASE Receptor.
-            resultado.append("Nombre: " + receptor.getNombre()+". \r\n");
-            resultado.append("Órgano Necesitado: " + receptor.getOrganoNecesitado()+". \r\n");
-            resultado.append("Tipo de Sangre: " + receptor.getTipoSangre()+". \r\n");
-            resultado.append("Días en Espera: " + receptor.getDiasEnEspera()+". \r\n");
-            resultado.append("Prioridad: " + receptor.getPrioridad()+". \r\n");
+            resultado.append("Cédula: " + receptor.getDato().getCedula() + ". \r\n"); //SE IMPRIMEN LOS ATRIBUTOS DE CADA RECEPTOR UTILIZANDO LOS MÉTODOS GETTERS DEFINIDOS EN LA CLASE Receptor.
+            resultado.append("Nombre: " + receptor.getDato().getNombre() + ". \r\n");
+            resultado.append("Órgano Necesitado: " + receptor.getDato().getOrganoNecesitado() + ". \r\n");
+            resultado.append("Tipo de Sangre: " + receptor.getDato().getTipoSangre() + ". \r\n");
+            resultado.append("Días en Espera: " + receptor.getDato().getDiasEnEspera() + ". \r\n");
+            resultado.append("Prioridad: " + receptor.getDato().getPrioridad() + ". \r\n");
             resultado.append("--------------------------------\r\n");
+            receptor = receptor.getSiguiente();
         }
         return (resultado.toString());
     }
 
     public Receptor buscarReceptor(String cedula) {
-        for (int i = 0; i < listaReceptores.tamaño(); i++) {
-            Receptor r = listaReceptores.obtener(i);
-            if (r.getCedula().equals(cedula)) {
-                return r;
+        TDANodo<Receptor> aux = listaReceptores.getPrimero();
+        while (aux != null) {
+            if (aux.getDato().getCedula().equals(cedula)) {
+                return aux.getDato();
             }
+            aux = aux.getSiguiente();
         }
         return null;
     }
 
     public boolean eliminarReceptor(String cedula) {
-        for (int i = 0; i < listaReceptores.tamaño(); i++) {
-            if (listaReceptores.obtener(i).getCedula().equals(cedula)) {
-                listaReceptores.eliminar(i);
+        TDANodo<Receptor> aux = listaReceptores.getPrimero();
+        while (aux != null) {
+            if (aux.getDato().getCedula().equals(cedula)) {
+                listaReceptores.eliminar(aux.getDato());
                 return true;
             }
+            aux = aux.getSiguiente();
         }
         return false;
     }
 
-    
 }
