@@ -20,7 +20,7 @@ public class GestorDonantes {
         listaDonantes.agregar(new Donante(cedula, nombre, organoDonado, tipoSangre));
     }
     
-    public void cargarDonantes(String archivo) {
+    public String cargarDonantes(String archivo) {
         listaDonantes = new ListaEnlazada<>();
 
         try (BufferedReader lector = new BufferedReader(new FileReader(archivo))) {
@@ -36,22 +36,24 @@ public class GestorDonantes {
                 //listaDonantes.agregar(donante);
                 this.agregarDonante(cedula, nombre, organo_donado, tipo_sangre);
             }
-            System.out.println("Se cargaron " + listaDonantes.tamaño() + " donantes.");
+            return("Se cargaron " + listaDonantes.tamaño() + " donantes.\r\n");
         } catch (Exception e) {
-            System.out.println("Error al leer donantes: " + e.getMessage());
+            return("Error al leer donantes: " + e.getMessage()+".\r\n");
         }
     }
 
-    public void MostrarDonantes() {
+    public String MostrarDonantes() {
+        StringBuilder resultado=new StringBuilder();
+        resultado.append("Se encontraron: "+String.valueOf(listaDonantes.tamaño())+" donantes. \r\n");
         for (int i = 0; i < listaDonantes.tamaño(); i++) {
             Donante donante = listaDonantes.obtener(i);
-            System.out.println("Cédula: " + donante.getCedula());
-            System.out.println("Nombre: " + donante.getNombre());
-            System.out.println("Órgano Donado: " + donante.getOrganoDonado());
-            System.out.println("Tipo de Sangre: " + donante.getTipoSangre());
-            System.out.println("---------------------------");
-
+            resultado.append("Cédula: " + donante.getCedula()+".\r\n");
+            resultado.append("Nombre: " + donante.getNombre()+".\r\n");
+            resultado.append("Órgano Donado: " + donante.getOrganoDonado()+".\r\n");
+            resultado.append("Tipo de Sangre: " + donante.getTipoSangre()+".\r\n");
+            resultado.append("---------------------------\r\n");
         }
+        return(resultado.toString());
     }
 // REVISAR MAÑANA===========================================================================
 

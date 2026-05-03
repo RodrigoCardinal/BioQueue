@@ -2,7 +2,6 @@ package com.example;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Random;
 
 import com.example.ImplementacionesTDA.ListaEnlazada;
 
@@ -22,11 +21,16 @@ public class GestorReceptores {
     public ListaEnlazada<Receptor> getListaReceptores() {
         return listaReceptores;
     }
-    public void agregarReceptor(String cedula, String nombre, String organoNecesitado, String tipoSangre, int diasEnEspera, int prioridad) {
-        listaReceptores.agregar(new Receptor(cedula, nombre, organoNecesitado, tipoSangre, diasEnEspera, prioridad));
+    public boolean agregarReceptor(String cedula, String nombre, String organoNecesitado, String tipoSangre, int diasEnEspera, int prioridad) {
+        try {
+            listaReceptores.agregar(new Receptor(cedula, nombre, organoNecesitado, tipoSangre, diasEnEspera, prioridad));
+            return(true);
+        } catch (Exception e) {
+            return(false);
+        }
     }
     
-    public void archivoReceptores(String receptores) {
+    public String archivoReceptores(String receptores) {
         try (BufferedReader lector = new BufferedReader(new FileReader(receptores))) //SE UTILIZA UN BufferedReader PARA LEER EL ARCHIVO DE TEXTO QUE CONTIENE LOS DATOS DE LOS RECEPTORES. EL NOMBRE DEL ARCHIVO SE PASA COMO ARGUMENTO AL CONSTRUCTOR DE LA CLASE Lista_Receptores.
         {
             String linea;
@@ -57,8 +61,9 @@ public class GestorReceptores {
                 Receptor receptor = new Receptor(cedula, nombre, organoNecesitado, tipoSangre, diasEnEspera, prioridad);
                 insertarOrdenado(receptor);
             }
+            return("Archivo leído correctamente, se cargaron: "+String.valueOf(listaReceptores.tamaño())+" receptores.\r\n");
         } catch (Exception e) {
-            System.out.println("Error al leer receptores: " + e.getMessage());//tira error si no puede leer el archivo, mostrando un mensaje de error con la descripción del problema.
+            return("Error al leer receptores: " + e.getMessage()+".\r\n");//tira error si no puede leer el archivo, mostrando un mensaje de error con la descripción del problema.
         }
     }
 
@@ -82,19 +87,22 @@ public class GestorReceptores {
         listaReceptores.insertar(i, receptor);
     }
 
-    public void MostrarReceptores() //ESTE MÉTODO SE UTILIZA PARA MOSTRAR LOS DATOS DE LOS RECEPTORES ALMACENADOS EN LA LISTA ENLAZADA listaReceptores. RECORRE LA LISTA Y IMPRIME LOS ATRIBUTOS DE CADA RECEPTOR.
+    public String MostrarReceptores() //ESTE MÉTODO SE UTILIZA PARA MOSTRAR LOS DATOS DE LOS RECEPTORES ALMACENADOS EN LA LISTA ENLAZADA listaReceptores. RECORRE LA LISTA Y IMPRIME LOS ATRIBUTOS DE CADA RECEPTOR.
     {
+        StringBuilder resultado=new StringBuilder();
+        resultado.append("Se encontraron: "+String.valueOf(listaReceptores.tamaño())+" receptores. \r\n");
         for (int i = 0; i < listaReceptores.tamaño(); i++) //SE UTILIZA UN BUCLE FOR PARA RECORRER LA LISTA ENLAZADA DESDE EL PRIMER ELEMENTO HASTA EL ÚLTIMO, UTILIZANDO EL MÉTODO tamaño() PARA OBTENER EL NÚMERO DE ELEMENTOS EN LA LISTA.
         {
             Receptor receptor = listaReceptores.obtener(i); //SE OBTIENE CADA RECEPTOR DE LA LISTA UTILIZANDO EL MÉTODO obtener() DE LA CLASE ListaEnlazada, PASANDO EL ÍNDICE i COMO ARGUMENTO.
-            System.out.println("Cédula: " + receptor.getCedula()); //SE IMPRIMEN LOS ATRIBUTOS DE CADA RECEPTOR UTILIZANDO LOS MÉTODOS GETTERS DEFINIDOS EN LA CLASE Receptor.
-            System.out.println("Nombre: " + receptor.getNombre());
-            System.out.println("Órgano Necesitado: " + receptor.getOrganoNecesitado());
-            System.out.println("Tipo de Sangre: " + receptor.getTipoSangre());
-            System.out.println("Días en Espera: " + receptor.getDiasEnEspera());
-            System.out.println("Prioridad: " + receptor.getPrioridad());
-            System.out.println("--------------------------------");
+            resultado.append("Cédula: " + receptor.getCedula()+". \r\n"); //SE IMPRIMEN LOS ATRIBUTOS DE CADA RECEPTOR UTILIZANDO LOS MÉTODOS GETTERS DEFINIDOS EN LA CLASE Receptor.
+            resultado.append("Nombre: " + receptor.getNombre()+". \r\n");
+            resultado.append("Órgano Necesitado: " + receptor.getOrganoNecesitado()+". \r\n");
+            resultado.append("Tipo de Sangre: " + receptor.getTipoSangre()+". \r\n");
+            resultado.append("Días en Espera: " + receptor.getDiasEnEspera()+". \r\n");
+            resultado.append("Prioridad: " + receptor.getPrioridad()+". \r\n");
+            resultado.append("--------------------------------\r\n");
         }
+        return (resultado.toString());
     }
 
     public Receptor buscarReceptor(String cedula) {

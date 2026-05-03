@@ -123,56 +123,56 @@ public class AnalisisDeSangre {
         switch (tipoReceptor) {
             case "O-":
                 for (String sangre : oNegativo) {
-                    if (sangre.equals(tipoDonante)) {
+                    if (sangre.equalsIgnoreCase(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "O+":
                 for (String sangre : oPositivo) {
-                    if (sangre.equals(tipoDonante)) {
+                    if (sangre.equalsIgnoreCase(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "A-":
                 for (String sangre : aNegativo) {
-                    if (sangre.equals(tipoDonante)) {
+                    if (sangre.equalsIgnoreCase(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "A+":
                 for (String sangre : aPositivo) {
-                    if (sangre.equals(tipoDonante)) {
+                    if (sangre.equalsIgnoreCase(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "B-":
                 for (String sangre : bNegativo) {
-                    if (sangre.equals(tipoDonante)) {
+                    if (sangre.equalsIgnoreCase(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "B+":
                 for (String sangre : bPositivo) {
-                    if (sangre.equals(tipoDonante)) {
+                    if (sangre.equalsIgnoreCase(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "AB-":
                 for (String sangre : abNegativo) {
-                    if (sangre.equals(tipoDonante)) {
+                    if (sangre.equalsIgnoreCase(tipoDonante)) {
                         return true;
                     }
                 }
                 return (false);
             case "AB+":
                 for (String sangre : abPositivo) {
-                    if (sangre.equals(tipoDonante)) {
+                    if (sangre.equalsIgnoreCase(tipoDonante)) {
                         return true;
                     }
                 }
