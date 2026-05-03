@@ -87,7 +87,7 @@ public class SistemaBioQueue {
         System.out.println("   Receptor seleccionado: " + receptorSeleccionado.getNombre());
     }
 
-    public void procesarDonante(Donante donante, RegistroTrasplantes registro) {
+    public String procesarDonante(Donante donante, RegistroTrasplantes registro) {
         String organo = donante.getOrganoDonado();
         String sangreDonante = donante.getTipoSangre();
         AnalisisDeSangre compatibilidad = new AnalisisDeSangre();
@@ -103,8 +103,7 @@ public class SistemaBioQueue {
         }
 
         if (compatibles.tamaño() == 0) {
-            System.out.println("No hay receptores compatibles para " + donante.getNombre());
-            return;
+            return("No hay receptores compatibles para " + donante.getNombre()+".\r\n");
         }
 
         // 2. Seleccionar el mejor según prioridad (y desempate aleatorio)
@@ -112,14 +111,14 @@ public class SistemaBioQueue {
 
         // 3. Eliminar receptor de la lista de espera
         gestorReceptores.eliminarReceptor(seleccionado.getCedula());
-
+        gestorDonantes.eliminarDonante(donante.getCedula());
         // 4. Registrar trasplante
         registro.añadirTrasplante(donante, seleccionado);
 
-        System.out.println("Trasplante realizado: " + donante.getNombre()
+        return("Trasplante realizado: " + donante.getNombre()
                 + " (" + donante.getOrganoDonado() + ", " + donante.getTipoSangre() + ")"
                 + " -> " + seleccionado.getNombre()
-                + " (prioridad " + seleccionado.getPrioridad() + ")");
+                + " (prioridad " + seleccionado.getPrioridad() + ").\r\n");
     }
 
     private Receptor seleccionarMejorReceptor(ListaEnlazada<Receptor> compatibles) {

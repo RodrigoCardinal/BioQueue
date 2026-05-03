@@ -1,6 +1,10 @@
 package com.example;
 
-import java.util.Scanner;
+import com.example.ImplementacionFachada.Facade;
+import com.example.ImplementacionFachada.IImpresion;
+import com.example.ImplementacionFachada.ILector;
+import com.example.ImplementacionFachada.Impresion;
+import com.example.ImplementacionFachada.Lector;
 
 public class App {
 
@@ -67,49 +71,50 @@ public class App {
 
          */
         Facade facade = Facade.Instancia();
+        IImpresion impresion=new Impresion();
+        ILector lector=new Lector();
         String opcion = "";
         while (!opcion.equals("-1")) {
-            facade.mostrarMenu();
-            Scanner sc = new Scanner(System.in);
-            opcion = sc.nextLine();
+            impresion.imprimir(facade.mostrarMenu());
+            opcion = lector.leerLinea();
             switch (opcion) {
                 case "-1":
                     break;
                 case "1":
-                    Facade.Instancia().registrarDonante();
+                    impresion.imprimir(facade.registrarDonante());
                     break;
                 case "2":
-                    Facade.Instancia().cargarDonantesDesdeArchivo();
+                    impresion.imprimir(facade.cargarDonantesDesdeArchivo());
                     break;
                 case "3":
-                    Facade.Instancia().buscarDonante();
+                    impresion.imprimir(facade.buscarDonante());
                     break;
                 case "4":
-                    Facade.Instancia().eliminarDonante();
+                    impresion.imprimir(facade.eliminarDonante());
                     break;
                 case "5":
-                    Facade.Instancia().mostrarDonantes();
+                    impresion.imprimir(facade.mostrarDonantes());
                     break;
                 case "6":
-                    Facade.Instancia().registrarReceptor();
+                    impresion.imprimir(facade.registrarReceptor());
                     break;
                 case "7":
-                    Facade.Instancia().cargarReceptoresDesdeArchivo();
+                    impresion.imprimir(facade.cargarReceptoresDesdeArchivo());
                     break;
                 case "8":
-                    Facade.Instancia().buscarReceptor();
+                    impresion.imprimir(facade.buscarReceptor());
                     break;
                 case "9":
-                    Facade.Instancia().eliminarReceptor();
+                    impresion.imprimir(facade.eliminarReceptor());
                     break;
                 case "10":
-                    Facade.Instancia().mostrarReceptores();
+                    impresion.imprimir(facade.mostrarReceptores());
                     break;
                 case "11":
-                    Facade.Instancia().procesoMatch();
+                    impresion.imprimir(facade.procesoMatch());
                     break;
                 case "12":
-                    Facade.Instancia().mostrarTrasplantes();
+                    impresion.imprimir(facade.mostrarTrasplantes());
                     break;
                 default:
                     System.out.print("Opción no válida\r\n");

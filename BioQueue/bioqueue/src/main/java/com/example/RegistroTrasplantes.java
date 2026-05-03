@@ -23,6 +23,7 @@ public class RegistroTrasplantes {
     public String imprimirTrasplantes()
     {
         StringBuilder toReturn= new StringBuilder();
+        toReturn.append("Se encontraron: "+String.valueOf(listaTrasplantes.tamaño())+" transplantes realizados.\r\n");
         for(int i =0; i<listaTrasplantes.tamaño(); i++) {
             toReturn.append("----------------------------------------------------------------------------\r\n");
             toReturn.append("CI receptor: "+listaTrasplantes.obtener(i).getReceptor().getCedula()+".\r\n");
