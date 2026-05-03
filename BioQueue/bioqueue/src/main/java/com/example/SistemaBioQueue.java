@@ -8,12 +8,12 @@ public class SistemaBioQueue {
 
     private GestorReceptores gestorReceptores;
     private GestorDonantes gestorDonantes;
-    private RegistroTransplantes registroTransplantes;
+    private RegistroTrasplantes registroTrasplantes;
 
     public SistemaBioQueue() {
         gestorReceptores = new GestorReceptores();
         gestorDonantes=new GestorDonantes();
-        registroTransplantes=new RegistroTransplantes();
+        registroTrasplantes=new RegistroTrasplantes();
     }
     public GestorReceptores getGestorReceptores() {
         return(gestorReceptores);
@@ -23,8 +23,8 @@ public class SistemaBioQueue {
         return gestorDonantes;
     }
 
-    public RegistroTransplantes getRegistroTransplantes() {
-        return registroTransplantes;
+    public RegistroTrasplantes getRegistroTrasplantes() {
+        return registroTrasplantes;
     }
     
     public void filtrarYDesempatar(String organoNecesitado, String tipoSangreDonante) {
@@ -87,7 +87,7 @@ public class SistemaBioQueue {
         System.out.println("   Receptor seleccionado: " + receptorSeleccionado.getNombre());
     }
 
-    public void procesarDonante(Donante donante, RegistroTransplantes registro) {
+    public void procesarDonante(Donante donante, RegistroTrasplantes registro) {
         String organo = donante.getOrganoDonado();
         String sangreDonante = donante.getTipoSangre();
         AnalisisDeSangre compatibilidad = new AnalisisDeSangre();
@@ -114,7 +114,7 @@ public class SistemaBioQueue {
         gestorReceptores.eliminarReceptor(seleccionado.getCedula());
 
         // 4. Registrar trasplante
-        registro.añadirTransplante(donante, seleccionado);
+        registro.añadirTrasplante(donante, seleccionado);
 
         System.out.println("Trasplante realizado: " + donante.getNombre()
                 + " (" + donante.getOrganoDonado() + ", " + donante.getTipoSangre() + ")"

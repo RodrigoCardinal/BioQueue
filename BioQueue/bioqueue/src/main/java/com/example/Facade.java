@@ -35,7 +35,7 @@ public class Facade {
         result.append("Ingrese 9 para eliminar un receptor.\r\n");
         result.append("Ingrese 10 para mostrar receptores en la lista.\r\n"); //
         result.append("Ingrese 11 para hacer el proceso de asignación receptor-órgano.\r\n"); //
-        result.append("Ingrese 12 para ver el historial de transplantes. \r\n"); //
+        result.append("Ingrese 12 para ver el historial de trasplantes. \r\n"); //
         System.out.print(result.toString());
     }
 
@@ -105,11 +105,11 @@ public class Facade {
     public void procesoMatch() {
         for (int i = 0; i < sistema.getGestorDonantes().getListaDonantes().tamaño(); i++) {
             Donante d = sistema.getGestorDonantes().getListaDonantes().obtener(i);
-            sistema.procesarDonante(d, sistema.getRegistroTransplantes());
+            sistema.procesarDonante(d, sistema.getRegistroTrasplantes());
         }
     }
 
-    public void mostrarTransplantes() {
-        System.out.print(sistema.getRegistroTransplantes().imprimirTransplantes());
+    public void mostrarTrasplantes() {
+        System.out.print(sistema.getRegistroTrasplantes().imprimirTrasplantes());
     }
 }

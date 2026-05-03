@@ -109,7 +109,7 @@ public class App {
                     Facade.Instancia().procesoMatch();
                     break;
                 case "12":
-                    Facade.Instancia().mostrarTransplantes();
+                    Facade.Instancia().mostrarTrasplantes();
                     break;
                 default:
                     System.out.print("Opción no válida\r\n");
