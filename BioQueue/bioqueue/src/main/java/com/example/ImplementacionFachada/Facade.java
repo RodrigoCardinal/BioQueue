@@ -19,12 +19,12 @@ public class Facade {
         StringBuilder result = new StringBuilder();
 
         result.append("Ingrese -1 para salir.\r\n");
-        result.append("Ingrese 1 para registrar un donante (Ingresar los datos de la siguiente manera: cedula,nombre,organoDonado,tipoSangre).\r\n"); //
+        result.append("Ingrese 1 para registrar un donante (Ingresar los datos de la siguiente manera: cedula|nombre|organoDonado|tipoSangre).\r\n"); //
         result.append("Ingrese 2 para cargar donantes desde un archivo (Ingresar ruta del archivo).\r\n"); //
         result.append("Ingrese 3 para buscar un donante (Ingresar la cédula del donante a buscar).\r\n"); //
         result.append("Ingrese 4 para eliminar un donante (Ingresar la cédula del donante a eliminar).\r\n"); //
         result.append("Ingrese 5 para mostrar donantes en la lista.\r\n"); //
-        result.append("Ingrese 6 para registrar un receptor (Ingresar los datos de la siguiente manera: cedula,nombre,organoNecesitado,tipoSangre,diasEnEspera,prioridad).\r\n");
+        result.append("Ingrese 6 para registrar un receptor (Ingresar los datos de la siguiente manera: cedula|nombre|organoNecesitado|tipoSangre|diasEnEspera|prioridad).\r\n");
         result.append("Ingrese 7 para cargar receptores desde un archivo (ingresar ruta del archivo).\r\n"); //
         result.append("Ingrese 8 para buscar un receptor (Ingresar la cédula del receptor a buscar).\r\n");
         result.append("Ingrese 9 para eliminar un receptor (Ingresar la cédula del receptor a eliminar).\r\n");
@@ -45,7 +45,7 @@ public class Facade {
 
     public String registrarDonante() {
         String linea = lector.leerLinea();
-        String[] parametros = linea.split(",");
+        String[] parametros = linea.split("\\|");
         try {
             sistema.getGestorDonantes().agregarDonante(parametros[0], parametros[1], parametros[2], parametros[3]);
             return ("Donante agregado correctamente\r\n");
@@ -85,7 +85,7 @@ public class Facade {
 
     public String registrarReceptor() {
         String linea = lector.leerLinea();
-        String[] parametros = linea.split(",");
+        String[] parametros = linea.split("\\|");
         try {
             sistema.getGestorReceptores().agregarReceptor(parametros[0], parametros[1], parametros[2], parametros[3], Integer.valueOf(parametros[4]), Integer.valueOf(parametros[5]));
             return ("Receptor registrado correctamente. \r\n");
@@ -115,12 +115,17 @@ public class Facade {
     }
 
     public String procesoMatch() {
+        /* 
         StringBuilder resultado = new StringBuilder();
-        for (int i = 0; i < sistema.getGestorDonantes().getListaDonantes().tamaño(); i++) {
-            Donante d = sistema.getGestorDonantes().getListaDonantes().obtener(i);
+        TDANodo<Donante> aux =sistema.getGestorDonantes().getListaDonantes().getPrimero();
+        while(aux!=null) {
+            Donante d =aux.getDato();
             resultado.append(sistema.procesarDonante(d, sistema.getRegistroTrasplantes()));
+            aux=aux.getSiguiente();
         }
         return (resultado.toString());
+        */
+       return(sistema.procesarListaEnteraDonantes());
     }
 
     public String mostrarTrasplantes() {

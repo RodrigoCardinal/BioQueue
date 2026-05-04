@@ -115,7 +115,6 @@ public class SistemaBioQueue {
 
         // 3. Eliminar receptor de la lista de espera, y elimina donante de la lista de donantes
         gestorReceptores.eliminarReceptor(seleccionado.getCedula());
-        gestorDonantes.eliminarDonante(donante.getCedula());
         // 4. Registrar trasplante
         registro.añadirTrasplante(donante, seleccionado);
 
@@ -153,6 +152,23 @@ public class SistemaBioQueue {
         }else {
         java.util.Random rand = new java.util.Random();
         return empatados.obtener(rand.nextInt(empatados.tamaño()));}
+    }
+
+    public String procesarListaEnteraDonantes() {
+        StringBuilder resultado = new StringBuilder();
+        TDANodo<Donante> nodo=gestorDonantes.getListaDonantes().getPrimero();
+        while(nodo!=null) {
+            Donante d =nodo.getDato();
+            resultado.append(procesarDonante(d, registroTrasplantes));
+            nodo=nodo.getSiguiente();
+        }
+        TDANodo<Trasplante> aux=registroTrasplantes.getListaTrasplantes().getPrimero();
+        while(aux!=null) {
+            gestorDonantes.getListaDonantes().eliminar(aux.getDato().getDonante());
+            //gestorReceptores.getListaReceptores().eliminar(aux.getDato().getReceptor());
+            aux=aux.getSiguiente();
+        }
+        return(resultado.toString());
     }
     //REVISAR MAÑANA===============================================
     // Dentro de Lista_Receptores.java
