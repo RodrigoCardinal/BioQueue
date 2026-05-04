@@ -5,11 +5,16 @@ import com.example.ImplementacionesTDA.TDANodo;
 
 public class RegistroTrasplantes {
 
-    ListaEnlazada<Trasplante> listaTrasplantes;
+    private ListaEnlazada<Trasplante> listaTrasplantes;
 
     public RegistroTrasplantes() {
         listaTrasplantes = new ListaEnlazada<>();
     }
+
+    public ListaEnlazada<Trasplante> getListaTrasplantes() {
+        return listaTrasplantes;
+    }
+    
     public void añadirTrasplante(Donante donante, Receptor receptor) {
         this.listaTrasplantes.agregar(new Trasplante(donante, receptor));
     }

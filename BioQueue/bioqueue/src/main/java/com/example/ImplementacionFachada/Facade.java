@@ -115,12 +115,17 @@ public class Facade {
     }
 
     public String procesoMatch() {
+        /* 
         StringBuilder resultado = new StringBuilder();
-        for (int i = 0; i < sistema.getGestorDonantes().getListaDonantes().tamaño(); i++) {
-            Donante d = sistema.getGestorDonantes().getListaDonantes().obtener(i);
+        TDANodo<Donante> aux =sistema.getGestorDonantes().getListaDonantes().getPrimero();
+        while(aux!=null) {
+            Donante d =aux.getDato();
             resultado.append(sistema.procesarDonante(d, sistema.getRegistroTrasplantes()));
+            aux=aux.getSiguiente();
         }
         return (resultado.toString());
+        */
+       return(sistema.procesarListaEnteraDonantes());
     }
 
     public String mostrarTrasplantes() {
