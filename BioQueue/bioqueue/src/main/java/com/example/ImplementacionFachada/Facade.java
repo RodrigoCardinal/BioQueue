@@ -6,7 +6,6 @@ import com.example.SistemaBioQueue;
 
 public class Facade {
 
-    private static Facade instancia;
     private SistemaBioQueue sistema;
     private ILector lector;
 

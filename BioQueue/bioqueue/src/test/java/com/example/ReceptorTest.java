@@ -6,7 +6,7 @@ import org.junit.Test;
 import com.example.ImplementacionesTDA.ListaEnlazada;
 import com.example.ImplementacionesTDA.TDANodo;
 
-public class ReceptorTest { //hola
+public class ReceptorTest { 
     
     private Receptor receptor;
     private GestorReceptores gestor;
