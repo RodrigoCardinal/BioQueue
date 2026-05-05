@@ -25,7 +25,7 @@ public class GestorReceptores {
 
     public boolean agregarReceptor(String cedula, String nombre, String organoNecesitado, String tipoSangre, int diasEnEspera, int prioridad) {
         try {
-            listaReceptores.agregar(new Receptor(cedula, nombre, organoNecesitado, tipoSangre, diasEnEspera, prioridad));
+            this.insertarOrdenado(new Receptor(cedula, nombre, organoNecesitado, tipoSangre, diasEnEspera, prioridad));
             return (true);
         } catch (Exception e) {
             return (false);
@@ -46,20 +46,6 @@ public class GestorReceptores {
                 int diasEnEspera = Integer.parseInt(datos[4].trim()); //SE CONVIERTE EL QUINTO ELEMENTO DEL ARREGLO datos DE UN STRING A UN ENTERO UTILIZANDO Integer.parseInt(), YA QUE EL NÚMERO DE DÍAS EN ESPERA ES UN VALOR NUMÉRICO.
                 int prioridad = Integer.parseInt(datos[5].trim());
 
-                /* Dejo aca por si queremos convertir de numero a texto. Es de ka 
-                implementacion vieja
-                Convertir prioridad de texto a número (como String)
-                String prioridadNumero;
-                if (prioridadTexto.equals("Alta")) {
-                    prioridadNumero = "1";
-                } else if (prioridadTexto.equals("Media")) {
-                    prioridadNumero = "2";
-                } else if (prioridadTexto.equals("Baja")) {
-                    prioridadNumero = "3";
-                } else {
-                    prioridadNumero = "0"; // valor por defecto si no se reconoce
-                } */
-                // Crear receptor con la prioridad convertida a número (como String)
                 Receptor receptor = new Receptor(cedula, nombre, organoNecesitado, tipoSangre, diasEnEspera, prioridad);
                 insertarOrdenado(receptor);
             }
@@ -69,7 +55,7 @@ public class GestorReceptores {
         }
     }
 
-    private void insertarOrdenado(Receptor receptor) { //metodo que organiza segun prioridad 1 -> 2 -> 3
+    public void insertarOrdenado(Receptor receptor) { //metodo que organiza segun prioridad 1 -> 2 -> 3
         if (listaReceptores.esVacia()) {
             listaReceptores.agregar(receptor);
             return;
