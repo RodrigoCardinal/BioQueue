@@ -11,7 +11,6 @@ public class TrasplantesTest {
     private Receptor receptor;
     private Trasplante trasplante;
     private Donante donante1;
-    private Donante donante2;
     private Receptor receptor1;
     private Receptor receptor2;
 

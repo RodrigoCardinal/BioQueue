@@ -1,10 +1,8 @@
 package com.example;
 
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import com.example.ImplementacionesTDA.ListaEnlazada;
 import com.example.ImplementacionesTDA.TDANodo;
 
