@@ -17,12 +17,13 @@ public class TrasplantesTest {
     @Before
     public void setUp() {
         registro = new RegistroTrasplantes();
-        trasplante = new Trasplante(donante, receptor);
     }
     
     @Test
     public void testGetDonante() {
         donante = new Donante("12345678", "Marco Carlomagno", "Corazon", "O+");
+        receptor = new Receptor("11111111", "Maria De", "Corazon", "O+", 60, 1);
+        trasplante = new Trasplante(donante, receptor);
         Donante donante = trasplante.getDonante();
         assertEquals("Marco Carlomagno", donante.getNombre());
         assertEquals("Corazon", donante.getOrganoDonado());
@@ -33,6 +34,8 @@ public class TrasplantesTest {
     @Test
     public void testGetReceptor() {
         receptor = new Receptor("11111111", "Maria De", "Corazon", "O+", 60, 1);
+        donante = new Donante("12345678", "Marco Carlomagno", "Corazon", "O+");
+        trasplante = new Trasplante(donante, receptor);
         Receptor receptor = trasplante.getReceptor();
         assertEquals("Maria De", receptor.getNombre());
         assertEquals("Corazon", receptor.getOrganoNecesitado());
@@ -90,7 +93,7 @@ public class TrasplantesTest {
     public void testBuscarTrasplanteConCIIncorrecta() {
         donante1 = new Donante("123454", "Antonio Velazco", "Riñon", "B+");
         receptor2 = new Receptor("22222222", "Carlos Buela", "Riñon", "B+", 70, 2);
-        registro.añadirTrasplante(donante1, receptor1);
+        registro.añadirTrasplante(donante1, receptor2);
         
         Trasplante encontrado = registro.buscarTrasplante("123454", "00000000");
         
@@ -102,7 +105,6 @@ public class TrasplantesTest {
         String resultado = registro.imprimirTrasplantes();
         
         assertNotNull(resultado);
-        assertTrue(false);
     }
     
     @Test

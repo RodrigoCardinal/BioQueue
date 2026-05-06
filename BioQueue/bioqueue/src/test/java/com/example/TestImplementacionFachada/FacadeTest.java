@@ -11,10 +11,7 @@ public class FacadeTest {
 
     private Facade facade;
 
-    /**
-     * Mock de ILector que devuelve entradas predefinidas en orden,
-     * simulando lo que un usuario escribiría por consola.
-     */
+    // simula lo que un usuario escribe por consola
     private static class LectorMock implements ILector {
         private final String[] entradas;
         private int indice;
@@ -52,7 +49,6 @@ public class FacadeTest {
     public void testMostrarMenuContieneTodasLasOpciones() {
         facade = new Facade(new LectorMock());
         String menu = facade.mostrarMenu();
-        // Debe contener las 12 opciones del menú
         for (int i = 1; i <= 12; i++) {
             assertTrue("El menú debe contener la opción " + i,
                     menu.contains("Ingrese " + i));
@@ -231,7 +227,6 @@ public class FacadeTest {
     public void testProcesoMatchSinDatos() {
         facade = new Facade(new LectorMock());
         String resultado = facade.procesoMatch();
-        // No debe lanzar excepciones aunque no haya donantes ni receptores
         assertNotNull(resultado);
     }
 
@@ -251,7 +246,7 @@ public class FacadeTest {
 
     @Test
     public void testProcesoMatchSinCompatiblesPorOrgano() {
-        // Donante con órgano distinto al que necesita el receptor
+        // Donante con organo distinto al que necesita el receptor
         facade = new Facade(new LectorMock(
                 "12345678|Maria Diaz|Riñon|O+|30|1",
                 "87654321|Juan Perez|Corazon|O+"
@@ -264,7 +259,7 @@ public class FacadeTest {
 
     @Test
     public void testProcesoMatchSinCompatiblesPorSangre() {
-        // Donante con sangre incompatible (A+ no puede donar a O+)
+        // Donante con sangre incompatible
         facade = new Facade(new LectorMock(
                 "12345678|Maria Diaz|Riñon|O+|30|1",
                 "87654321|Juan Perez|Riñon|A+"
@@ -277,17 +272,16 @@ public class FacadeTest {
 
     @Test
     public void testProcesoMatchPriorizaPorPrioridad() {
-        // Dos receptores compatibles, debe elegir el de prioridad menor (más urgente)
+        // Dos receptores compatibles, debe elegir el de prioridad menor
         facade = new Facade(new LectorMock(
-                "11111111|Receptor Baja|Riñon|O+|30|3",  // prioridad 3 (menos urgente)
-                "22222222|Receptor Alta|Riñon|O+|30|1",  // prioridad 1 (más urgente)
+                "11111111|Receptor Baja|Riñon|O+|30|3",  // menos urgente
+                "22222222|Receptor Alta|Riñon|O+|30|1",  // mas urgente
                 "87654321|Donante Uno|Riñon|O+"
         ));
         facade.registrarReceptor();
         facade.registrarReceptor();
         facade.registrarDonante();
         String resultado = facade.procesoMatch();
-        // El receptor con prioridad 1 debe recibir el órgano
         assertTrue(resultado.contains("Receptor Alta"));
     }
 
@@ -314,7 +308,7 @@ public class FacadeTest {
     }
 
     // ============================================================
-    // INTEGRACIÓN
+    // INTEGRACION
     // ============================================================
 
     @Test
@@ -336,7 +330,6 @@ public class FacadeTest {
 
         String matchResult = facade.procesoMatch();
         assertNotNull(matchResult);
-        // Después del match, debería haber al menos un trasplante
         String trasplantes = facade.mostrarTrasplantes();
         assertFalse(trasplantes.contains("0 transplantes"));
     }

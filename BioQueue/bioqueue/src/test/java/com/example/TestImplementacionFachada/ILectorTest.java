@@ -11,13 +11,6 @@ import org.junit.Test;
 import com.example.ImplementacionFachada.ILector;
 import com.example.ImplementacionFachada.Lector;
 
-/**
- * Tests para la interfaz ILector.
- * Como las interfaces no tienen implementación, verificamos:
- *  1. Que el contrato se pueda implementar correctamente (con un stub).
- *  2. Que la clase Lector respeta el contrato.
- *  3. Que se puede usar polimorfismo sobre ILector.
- */
 public class ILectorTest {
 
     private final InputStream entradaOriginal = System.in;
@@ -27,10 +20,6 @@ public class ILectorTest {
         System.setIn(entradaOriginal);
     }
 
-    /**
-     * Implementación stub de ILector para verificar el contrato.
-     * En lugar de leer desde la consola, devuelve entradas predefinidas en orden.
-     */
     private static class ILectorStub implements ILector {
         private final String[] entradas;
         private int indice;
@@ -71,7 +60,6 @@ public class ILectorTest {
 
     @Test
     public void testLectorImplementaInterfaz() {
-        // La clase concreta Lector debe implementar ILector
         System.setIn(new ByteArrayInputStream("test\n".getBytes()));
         Lector lector = new Lector();
         assertTrue(lector instanceof ILector);
@@ -85,7 +73,6 @@ public class ILectorTest {
 
     @Test
     public void testPolimorfismoConLector() {
-        // Una variable de tipo ILector puede contener cualquier implementación
         System.setIn(new ByteArrayInputStream("Polimorfismo\n".getBytes()));
         ILector lector = new Lector();
         assertEquals("Polimorfismo", lector.leerLinea());
@@ -99,8 +86,7 @@ public class ILectorTest {
 
     @Test
     public void testInterfazUsadaEnFacade() {
-        // Verifica que se pueda pasar cualquier implementación de ILector al Facade
-        // Esto es importante porque el Facade depende de ILector, no de Lector directamente
+        // Verificar que se pueda pasar cualquier implementación de ILector al Facade
         ILector stub = new ILectorStub("test");
         // Si la interfaz no estuviera bien definida, esto no compilaría
         assertNotNull(stub);
@@ -109,7 +95,6 @@ public class ILectorTest {
 
     @Test
     public void testInterfazPermiteFormatoBioQueue() {
-        // El formato típico de entrada del sistema usa | como separador
         ILectorStub stub = new ILectorStub("12345678|Juan Perez|Riñon|O+");
         assertEquals("12345678|Juan Perez|Riñon|O+", stub.leerLinea());
     }

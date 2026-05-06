@@ -20,14 +20,12 @@ public class ImpresionTest {
 
     @Before
     public void setUp() {
-        // Redirigimos System.out para capturar lo que se imprime
         System.setOut(new PrintStream(salidaCapturada));
         impresion = new Impresion();
     }
 
     @After
     public void tearDown() {
-        // Restauramos System.out al original
         System.setOut(salidaOriginal);
     }
 

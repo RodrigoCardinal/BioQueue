@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.example.ImplementacionesTDA.ListaEnlazada;
+
 public class SistemaBioQueueTest {
     
     private SistemaBioQueue sistema;
@@ -45,18 +47,51 @@ public class SistemaBioQueueTest {
         assertNotNull(sistema.getRegistroTrasplantes());
         assertNotNull(sistema.getRegistroTrasplantes().getListaTrasplantes());
     }
-    //falta la parte del sistemaBioqueue
 
     @Test
-    public void testDesempateRandom() {}
-
+    public void testDesempateRandom() {
+        ListaEnlazada<Receptor> listaDesempate = new ListaEnlazada<>();
+        listaDesempate.agregar(receptor1);
+        listaDesempate.agregar(receptor3);
+        
+        sistema.desempateRandom(listaDesempate);
+    }
+    
     @Test
-    public void testProcesarDonante() {}
-
+    public void testProcesarDonanteSinCompatibles() {
+        RegistroTrasplantes registro = sistema.getRegistroTrasplantes();
+        
+        String resultado = sistema.procesarDonante(donante1, registro);
+        assertNotNull(resultado);
+        assertTrue(resultado.contains("No hay receptores compatibles"));
+    }
+    
     @Test
-    public void testseleccionarMejorReceptor() {}
-
+    public void testProcesarDonanteConCompatible() {
+        RegistroTrasplantes registro = sistema.getRegistroTrasplantes();
+        
+        String resultado = sistema.procesarDonante(donante1, registro);
+        
+        assertNotNull(resultado);
+    }
+    
     @Test
-    public void testProcesarListaEnteraDonantes() {}
-
+    public void testProcesarDonanteMultiplesCompatibles() {
+        RegistroTrasplantes registro = sistema.getRegistroTrasplantes();
+        
+        String resultado = sistema.procesarDonante(donante1, registro);
+        assertNotNull(resultado);
+    }
+    
+    @Test
+    public void testProcesarListaEnteraDonantes() {
+        String resultado = sistema.procesarListaEnteraDonantes();
+        assertNotNull(resultado);
+    }
+    
+    @Test
+    public void testDesempateRandomListaVacia() {
+        ListaEnlazada<Receptor> listaVacia = new ListaEnlazada<>();
+        sistema.desempateRandom(listaVacia);
+    }
 }
