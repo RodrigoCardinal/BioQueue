@@ -51,7 +51,6 @@ public class TrasplantesTest {
         registro.añadirTrasplante(donante, receptor);
         
         assertFalse(registro.getListaTrasplantes().esVacia());
-        
         Trasplante trasplante = registro.getListaTrasplantes().getPrimero().getDato();
         assertEquals("12345678", trasplante.getDonante().getCedula());
         assertEquals("11111111", trasplante.getReceptor().getCedula());
@@ -67,7 +66,6 @@ public class TrasplantesTest {
         registro.añadirTrasplante(donante1, receptor1);
     
         Trasplante encontrado = registro.buscarTrasplante("12345678", "11111111");
-        
         assertNotNull(encontrado);
     }
     
@@ -78,14 +76,12 @@ public class TrasplantesTest {
         registro.añadirTrasplante(donante1, receptor1);
         
         Trasplante encontrado = registro.buscarTrasplante("99999999", "88888888");
-        
         assertNull(encontrado);
     }
     
     @Test
     public void testBuscarTrasplanteListaVacia() {
         Trasplante encontrado = registro.buscarTrasplante("12345678", "11111111");
-        
         assertNull(encontrado);
     }
     
@@ -96,25 +92,22 @@ public class TrasplantesTest {
         registro.añadirTrasplante(donante1, receptor2);
         
         Trasplante encontrado = registro.buscarTrasplante("123454", "00000000");
-        
         assertNull(encontrado);
     }
     
     @Test
     public void testImprimirTrasplantesVacio() {
         String resultado = registro.imprimirTrasplantes();
-        
         assertNotNull(resultado);
     }
     
     @Test
-    public void testImprimirTrasplantesConUnTrasplante() {
+    public void testImprimirTrasplantes() {
         donante1 = new Donante("123454", "Antonio Velazco", "Riñon", "B+");
         receptor1 = new Receptor("22222222", "Carlos Buela", "Riñon", "B+", 70, 2);
         registro.añadirTrasplante(donante1, receptor1);
     
         String resultado = registro.imprimirTrasplantes();
-        
         assertNotNull(resultado);
         assertTrue(resultado.contains("1"));
         assertTrue(resultado.contains("123454"));
@@ -123,13 +116,12 @@ public class TrasplantesTest {
     }
     
     @Test
-    public void testImprimirFormatoSalida() {
+    public void testImprimir() {
         donante1 = new Donante("123454", "Antonio Velazco", "Riñon", "B+");
         receptor1 = new Receptor("22222222", "Carlos Buela", "Riñon", "B+", 70, 2);
         registro.añadirTrasplante(donante1, receptor1);
         
         String resultado = registro.imprimirTrasplantes();
-
         assertNotNull(resultado);
         assertTrue(resultado.contains("----------------------------------------------------------------------------"));
         assertTrue(resultado.contains("CI receptor: 22222222"));
@@ -137,6 +129,4 @@ public class TrasplantesTest {
         assertTrue(resultado.contains("Órgano donado: Riñon")); 
         
     }
-
-
 }

@@ -3,17 +3,13 @@ package com.example;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.example.ImplementacionesTDA.ListaEnlazada;
 
 public class SistemaBioQueueTest {
     
     private SistemaBioQueue sistema;
     private Donante donante1;
-    private Donante donante2;
-    private Donante donante3;
     private Receptor receptor1;
-    private Receptor receptor2;
     private Receptor receptor3;
     
     @Before
@@ -21,15 +17,10 @@ public class SistemaBioQueueTest {
         sistema = new SistemaBioQueue();
         
         donante1 = new Donante("11111111", "Luca Moreno", "Corazon", "O+");
-        donante2 = new Donante("22222222", "Carlos Buela", "Riñon", "A+");
-        donante3 = new Donante("33333333", "Pedro Varela", "Higado", "B+");
-        
         receptor1 = new Receptor("44444444", "Marco Carlomagno", "Corazon", "O+", 30, 1);
-        receptor2 = new Receptor("55555555", "Federico Baptista", "Riñon", "A+", 45, 2);
-        receptor3 = new Receptor("66666666", "Rosa Ma", "Corazon", "O+", 20, 1);
+        receptor3 = new Receptor("22222222", "Carlos Buela", "Riñon", "A+", 20, 1);
     }
     
-
     @Test
     public void testGetGestorReceptores() {
         assertNotNull(sistema.getGestorReceptores());
@@ -71,7 +62,6 @@ public class SistemaBioQueueTest {
         RegistroTrasplantes registro = sistema.getRegistroTrasplantes();
         
         String resultado = sistema.procesarDonante(donante1, registro);
-        
         assertNotNull(resultado);
     }
     
